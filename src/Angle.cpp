@@ -26,19 +26,26 @@
  * I'd appreciate comments/suggestions on the code jpschewe@mtu.net
  */
 
-#ifndef GEODESY_GEODETIC_CALCULATOR
-#define GEODESY_GEODETIC_CALCULATOR
+#include <cmath>
 
-/**
- * Geodesy library based upon the Java version at
- * http://www.gavaghan.org/blog/free-source-code/geodesy-library-vincentys-formula-java/
- */
+#include "Angle.hpp"
+
 namespace geodesy {
 
-class GeodeticCalculator {
+Angle::Angle() {
+}
 
-};
+Angle::~Angle() {
+}
+
+const double Angle::PiOver180 = M_PI / 180.0;
+
+double Angle::toRadians(double degrees) {
+	return degrees * PiOver180;
+}
+
+double Angle::toDegrees(double radians) {
+	return radians / PiOver180;
+}
 
 } // geodesy
-
-#endif //GEODESY_GEODETIC_CALCULATOR

@@ -1,6 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
 
-# TODO need to remove these once we configure our version of g++ to look in
 # the right places
 include_directories(/opt/local/include)
 link_directories(/opt/local/lib)

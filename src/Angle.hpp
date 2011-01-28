@@ -26,19 +26,40 @@
  * I'd appreciate comments/suggestions on the code jpschewe@mtu.net
  */
 
-#ifndef GEODESY_GEODETIC_CALCULATOR
-#define GEODESY_GEODETIC_CALCULATOR
+#ifndef ANGLE_HPP_
+#define ANGLE_HPP_
 
-/**
- * Geodesy library based upon the Java version at
- * http://www.gavaghan.org/blog/free-source-code/geodesy-library-vincentys-formula-java/
- */
 namespace geodesy {
 
-class GeodeticCalculator {
+class Angle {
+public:
+	virtual ~Angle();
+
+	/**
+	 * Convert degrees to radians.
+	 * @param degrees
+	 * @return
+	 */
+	static double toRadians(double degrees);
+
+	/**
+	 * Convert radians to degrees.
+	 * @param radians
+	 * @return
+	 */
+	static double toDegrees(double radians);
+
+private:
+	/**
+	 * Disallow instantiation.
+	 */
+	Angle();
+
+	/** Degrees/Radians conversion constant. */
+	static const double PiOver180;
 
 };
 
-} // geodesy
+}
 
-#endif //GEODESY_GEODETIC_CALCULATOR
+#endif /* ANGLE_HPP_ */

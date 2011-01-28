@@ -1,0 +1,4 @@
+This is an implementation of Vincety's Formula in C++. It is based upon the code by Mike Gavaghan at http://www.gavaghan.org/blog/free-source-code/geodesy-library-vincentys-formula/
+
+This implementation is licensed under the BSD license.
+

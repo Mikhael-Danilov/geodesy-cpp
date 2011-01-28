@@ -1,7 +1,14 @@
-package org.gavaghan.geodesy;
 
-import junit.framework.TestCase;
 
+#include "GeodeticCalculatorTest.hpp"
+
+#include <GeodeticCalculator.hpp>
+
+using namespace geodesy;
+
+CPPUNIT_TEST_SUITE_REGISTRATION( GeodeticCalculatorTest );
+
+#if 0
 public class GeodeticCalculatorTest extends TestCase
 {
    public void testCalculateGeodeticCurve()
@@ -164,3 +171,4 @@ public class GeodeticCalculatorTest extends TestCase
      assertEquals(expected.getLongitude(), dest.getLongitude(), 0.0000001);
    }
 }
+#endif

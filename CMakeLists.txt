@@ -1,7 +1,7 @@
-project (geo) 
+project (GEODESY) 
 cmake_minimum_required (VERSION 2.6)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${GEODESY_SOURCE_DIR}/src )
 
 # turn on debugging
 add_definitions(-g)

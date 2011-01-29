@@ -38,7 +38,7 @@ GlobalPosition::GlobalPosition(double latitude, double longitude,
 	GlobalCoordinates(latitude, longitude), mElevation(elevation) {
 }
 
-GlobalPosition::GlobalPosition(GlobalCoordinates coords, double elevation) :
+GlobalPosition::GlobalPosition(const GlobalCoordinates &coords, double elevation) :
 	GlobalCoordinates(coords.getLatitude(), coords.getLongitude()), mElevation(
 			elevation) {
 }
@@ -89,7 +89,7 @@ bool GlobalPosition::operator>=(const GlobalPosition &other) const {
 	return compareTo(other) >= 0;
 }
 
-std::ostream& operator<<(std::ostream& os, const GlobalPostion& obj) {
+std::ostream& operator<<(std::ostream& os, const GlobalPosition& obj) {
 	//FIXME how to do super.toString() here?
 	os << static_cast<const GlobalCoordinates &> (obj) //
 			<< "elevation=" << obj.getElevation() << "m";

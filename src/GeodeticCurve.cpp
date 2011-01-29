@@ -41,21 +41,22 @@ GeodeticCurve::GeodeticCurve(double ellipsoidalDistance, double azimuth,
 			mReverseAzimuth(reverseAzimuth) {
 }
 
-double getEllipsoidalDistance() const {
+double GeodeticCurve::getEllipsoidalDistance() const {
 	return mEllipsoidalDistance;
 }
 
-double getAzimuth() const {
+double GeodeticCurve::getAzimuth() const {
 	return mAzimuth;
 }
 
-double getReverseAzimuth() const {
+double GeodeticCurve::getReverseAzimuth() const {
 	return mReverseAzimuth;
 }
 
-ostream& operator<<(ostream& os, const GeodeticCurve& ia) {
-	os << "s=" << io.getEllipsoidalDistance() << ";a12=" << io.getAzimuth()
-			<< ";a21=" << io.getReverseAzimuth() << ";";
+ostream& operator<<(ostream& os, const GeodeticCurve& obj) {
+	os << "s=" << obj.getEllipsoidalDistance() //
+			<< ";a12=" << obj.getAzimuth() //
+			<< ";a21=" << obj.getReverseAzimuth() << ";";
 
 	return os;
 }

@@ -29,6 +29,8 @@
 #ifndef GLOBALPOSITION_HPP_
 #define GLOBALPOSITION_HPP_
 
+#include "GlobalCoordinates.hpp"
+
 #include <ostream>
 
 namespace geodesy {
@@ -44,7 +46,7 @@ namespace geodesy {
  * </p>
  *
  */
-class GlobalPosition {
+class GlobalPosition : public GlobalCoordinates {
 public:
 	virtual ~GlobalPosition();
 
@@ -63,7 +65,7 @@ public:
 	 * @param coords coordinates of the position
 	 * @param elevation elevation, in meters, above the reference ellipsoid
 	 */
-	GlobalPosition(GlobalCoordinates coords, double elevation);
+	GlobalPosition(const GlobalCoordinates &coords, double elevation);
 
 	/**
 	 * Get elevation.
@@ -103,7 +105,7 @@ private:
 
 };
 
-std::ostream& operator<<(std::ostream& os, const GlobalPostion& obj);
+std::ostream& operator<<(std::ostream& os, const GlobalPosition& obj);
 
 }
 

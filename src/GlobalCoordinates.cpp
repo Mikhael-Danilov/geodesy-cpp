@@ -33,11 +33,13 @@
 
 namespace geodesy {
 
+using namespace std;
+
 GlobalCoordinates::~GlobalCoordinates() {
 }
 
 void GlobalCoordinates::canonicalize() {
-	mLatitude = (mLatitude + 180) % 360;
+	mLatitude = fmod((mLatitude + 180),  360);
 	if (mLatitude < 0) {
 		mLatitude += 360;
 	}
@@ -51,7 +53,7 @@ void GlobalCoordinates::canonicalize() {
 		mLongitude += 180;
 	}
 
-	mLongitude = ((mLongitude + 180) % 360);
+	mLongitude = fmod((mLongitude + 180), 360);
 	if (mLongitude <= 0) {
 		mLongitude += 360;
 	}
@@ -125,10 +127,10 @@ bool GlobalCoordinates::operator>=(const GlobalCoordinates &other) const {
 
 ostream& operator<<(ostream& os, const GlobalCoordinates& obj) {
 	os << fabs(obj.getLatitude()) << ((obj.getLatitude() >= 0) ? 'N' : 'S') //
-			<< (';') //
-			<< fabs(obj.getLongitude()) << (obj.getLongitude() >= 0) ? 'E'
-			: 'W' //
-					<< ';';
+			<< ";" //
+			<< fabs(obj.getLongitude()) << ((obj.getLongitude() >= 0) ? 'E'
+			: 'W') //
+			<< ";";
 
 	return os;
 }

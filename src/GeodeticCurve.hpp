@@ -83,7 +83,7 @@ private:
 
 };
 
-ostream& operator<<(std::ostream& os, const GeodeticCurve& ia);
+std::ostream& operator<<(std::ostream& os, const GeodeticCurve& ia);
 
 } //geodesys
 

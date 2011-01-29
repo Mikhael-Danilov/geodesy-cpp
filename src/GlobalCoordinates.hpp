@@ -125,7 +125,7 @@ private:
 
 };
 
-ostream& operator<<(std::ostream& os, const GlobalCoordinates& obj);
+std::ostream& operator<<(std::ostream& os, const GlobalCoordinates& obj);
 
 }
 

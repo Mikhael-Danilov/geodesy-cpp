@@ -81,12 +81,10 @@ private:
 	/** Reverse azimuth (degrees from north). */
 	const double mReverseAzimuth;
 
-
 };
 
-ostream& operator<<(ostream& os, const GeodeticCurve& ia);
+ostream& operator<<(std::ostream& os, const GeodeticCurve& ia);
 
-}
-}
+} //geodesys
 
 #endif /* GEODETICCURVE_HPP_ */

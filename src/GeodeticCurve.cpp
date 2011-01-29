@@ -30,6 +30,8 @@
 
 namespace geodesy {
 
+using namespace std;
+
 GeodeticCurve::~GeodeticCurve() {
 }
 

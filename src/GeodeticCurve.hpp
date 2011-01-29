@@ -44,17 +44,6 @@ class GeodeticCurve {
 public:
 	virtual ~GeodeticCurve();
 
-private:
-	/** Ellipsoidal distance (in meters). */
-	const double mEllipsoidalDistance;
-
-	/** Azimuth (degrees from north). */
-	const double mAzimuth;
-
-	/** Reverse azimuth (degrees from north). */
-	const double mReverseAzimuth;
-
-public:
 	/**
 	 * Create a new GeodeticCurve.
 	 * @param ellipsoidalDistance ellipsoidal distance in meters
@@ -81,6 +70,17 @@ public:
 	 * @return reverse azimuth in degrees
 	 */
 	double getReverseAzimuth() const;
+
+private:
+	/** Ellipsoidal distance (in meters). */
+	const double mEllipsoidalDistance;
+
+	/** Azimuth (degrees from north). */
+	const double mAzimuth;
+
+	/** Reverse azimuth (degrees from north). */
+	const double mReverseAzimuth;
+
 
 };
 

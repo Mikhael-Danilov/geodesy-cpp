@@ -26,44 +26,67 @@
  * I'd appreciate comments/suggestions on the code jpschewe@mtu.net
  */
 
-#ifndef ANGLE_HPP_
-#define ANGLE_HPP_
+#ifndef GEODETICCURVE_HPP_
+#define GEODETICCURVE_HPP_
+
+#include <ostream>
 
 namespace geodesy {
 
 /**
- * Utility methods for dealing with angles.
+ * This is the outcome of a geodetic calculation. It represents the path and
+ * ellipsoidal distance between two GlobalCoordinates for a specified reference
+ * ellipsoid.
  *
+ * @author Mike Gavaghan
  */
-class Angle {
+class GeodeticCurve {
 public:
-	virtual ~Angle();
-
-	/**
-	 * Convert degrees to radians.
-	 * @param degrees
-	 * @return
-	 */
-	static double toRadians(double degrees);
-
-	/**
-	 * Convert radians to degrees.
-	 * @param radians
-	 * @return
-	 */
-	static double toDegrees(double radians);
+	virtual ~GeodeticCurve();
 
 private:
-	/**
-	 * Disallow instantiation.
-	 */
-	Angle();
+	/** Ellipsoidal distance (in meters). */
+	const double mEllipsoidalDistance;
 
-	/** Degrees/Radians conversion constant. */
-	static const double PiOver180;
+	/** Azimuth (degrees from north). */
+	const double mAzimuth;
+
+	/** Reverse azimuth (degrees from north). */
+	const double mReverseAzimuth;
+
+public:
+	/**
+	 * Create a new GeodeticCurve.
+	 * @param ellipsoidalDistance ellipsoidal distance in meters
+	 * @param azimuth azimuth in degrees
+	 * @param reverseAzimuth reverse azimuth in degrees
+	 */
+	GeodeticCurve(double ellipsoidalDistance, double azimuth,
+			double reverseAzimuth);
+
+	/**
+	 * Get the ellipsoidal distance.
+	 * @return ellipsoidal distance in meters
+	 */
+	double getEllipsoidalDistance() const;
+
+	/**
+	 * Get the azimuth.
+	 * @return azimuth in degrees
+	 */
+	double getAzimuth() const;
+
+	/**
+	 * Get the reverse azimuth.
+	 * @return reverse azimuth in degrees
+	 */
+	double getReverseAzimuth() const;
 
 };
 
+ostream& operator<<(ostream& os, const GeodeticCurve& ia);
+
+}
 }
 
-#endif /* ANGLE_HPP_ */
+#endif /* GEODETICCURVE_HPP_ */

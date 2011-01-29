@@ -26,44 +26,36 @@
  * I'd appreciate comments/suggestions on the code jpschewe@mtu.net
  */
 
-#ifndef ANGLE_HPP_
-#define ANGLE_HPP_
+#include "GeodeticCurve.hpp"
 
 namespace geodesy {
 
-/**
- * Utility methods for dealing with angles.
- *
- */
-class Angle {
-public:
-	virtual ~Angle();
-
-	/**
-	 * Convert degrees to radians.
-	 * @param degrees
-	 * @return
-	 */
-	static double toRadians(double degrees);
-
-	/**
-	 * Convert radians to degrees.
-	 * @param radians
-	 * @return
-	 */
-	static double toDegrees(double radians);
-
-private:
-	/**
-	 * Disallow instantiation.
-	 */
-	Angle();
-
-	/** Degrees/Radians conversion constant. */
-	static const double PiOver180;
-
-};
-
+GeodeticCurve::~GeodeticCurve() {
 }
 
-#endif /* ANGLE_HPP_ */
+GeodeticCurve::GeodeticCurve(double ellipsoidalDistance, double azimuth,
+		double reverseAzimuth) :
+	mEllipsoidalDistance(ellipsoidalDistance), mAzimuth(azimuth),
+			mReverseAzimuth(reverseAzimuth) {
+}
+
+double getEllipsoidalDistance() const {
+	return mEllipsoidalDistance;
+}
+
+double getAzimuth() const {
+	return mAzimuth;
+}
+
+double getReverseAzimuth() const {
+	return mReverseAzimuth;
+}
+
+ostream& operator<<(ostream& os, const GeodeticCurve& ia) {
+	os << "s=" << io.getEllipsoidalDistance() << ";a12=" << io.getAzimuth()
+			<< ";a21=" << io.getReverseAzimuth() << ";";
+
+	return os;
+}
+
+}

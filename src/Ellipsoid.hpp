@@ -35,7 +35,6 @@ namespace geodesy {
 
 /**
  * Encapsulation of an ellipsoid, and declaration of common reference ellipsoids.
- * @author Mike Gavaghan
  */
 class Ellipsoid {
 public:

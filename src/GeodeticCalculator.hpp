@@ -70,7 +70,7 @@ public:
 	 * @return
 	 */
 	static std::tr1::shared_ptr<GlobalCoordinates> calculateEndingGlobalCoordinates(
-			const Ellipsoid &ellipsoid, const GlobalCoordinates &start,
+			std::tr1::shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
 			double startBearing, double distance, double &endBearing);
 
 	/**
@@ -85,7 +85,7 @@ public:
 	 * @return
 	 */
 	static std::tr1::shared_ptr<GlobalCoordinates> calculateEndingGlobalCoordinates(
-			const Ellipsoid &ellipsoid, const GlobalCoordinates &start,
+			std::tr1::shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
 			double startBearing, double distance);
 
 	/**
@@ -98,7 +98,7 @@ public:
 	 * @return
 	 */
 	static std::tr1::shared_ptr<GeodeticCurve> calculateGeodeticCurve(
-			const Ellipsoid &ellipsoid, const GlobalCoordinates &start,
+			std::tr1::shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
 			const GlobalCoordinates &end);
 
 	/**
@@ -122,7 +122,7 @@ public:
 	 * @return
 	 */
 	static std::tr1::shared_ptr<GeodeticMeasurement> calculateGeodeticMeasurement(
-			const Ellipsoid &refEllipsoid, const GlobalPosition &start,
+			std::tr1::shared_ptr<const Ellipsoid> refEllipsoid, const GlobalPosition &start,
 			const GlobalPosition &end);
 
 private:

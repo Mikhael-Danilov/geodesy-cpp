@@ -41,67 +41,67 @@ Ellipsoid::Ellipsoid(double semiMajor, double semiMinor, double flattening,
 			flattening), mInverseFlattening(inverseFlattening) {
 }
 
-shared_ptr<Ellipsoid> Ellipsoid::WGS84() {
-	static shared_ptr<Ellipsoid> singleton = fromAAndInverseF(6378137.0,
+shared_ptr<const Ellipsoid> Ellipsoid::WGS84() {
+	static shared_ptr<const Ellipsoid> singleton = fromAAndInverseF(6378137.0,
 			298.257223563);
 	return singleton;
 }
 
-shared_ptr<Ellipsoid> Ellipsoid::GRS80() {
-	static shared_ptr<Ellipsoid> singleton = fromAAndInverseF(6378137.0,
+shared_ptr<const Ellipsoid> Ellipsoid::GRS80() {
+	static shared_ptr<const Ellipsoid> singleton = fromAAndInverseF(6378137.0,
 			298.257222101);
 	return singleton;
 }
 
-shared_ptr<Ellipsoid> Ellipsoid::GRS67() {
-	static shared_ptr<Ellipsoid> singleton =
+shared_ptr<const Ellipsoid> Ellipsoid::GRS67() {
+	static shared_ptr<const Ellipsoid> singleton =
 			fromAAndInverseF(6378160.0, 298.25);
 	return singleton;
 }
 
-shared_ptr<Ellipsoid> Ellipsoid::ANS() {
-	static shared_ptr<Ellipsoid> singleton =
+shared_ptr<const Ellipsoid> Ellipsoid::ANS() {
+	static shared_ptr<const Ellipsoid> singleton =
 			fromAAndInverseF(6378160.0, 298.25);
 	return singleton;
 }
 
-shared_ptr<Ellipsoid> Ellipsoid::WGS72() {
-	static shared_ptr<Ellipsoid> singleton =
+shared_ptr<const Ellipsoid> Ellipsoid::WGS72() {
+	static shared_ptr<const Ellipsoid> singleton =
 			fromAAndInverseF(6378135.0, 298.26);
 	return singleton;
 }
 
-shared_ptr<Ellipsoid> Ellipsoid::Clarke1858() {
-	static shared_ptr<Ellipsoid> singleton = fromAAndInverseF(6378293.645,
+shared_ptr<const Ellipsoid> Ellipsoid::Clarke1858() {
+	static shared_ptr<const Ellipsoid> singleton = fromAAndInverseF(6378293.645,
 			294.26);
 	return singleton;
 }
 
-shared_ptr<Ellipsoid> Ellipsoid::Clarke1880() {
-	static shared_ptr<Ellipsoid> singleton = fromAAndInverseF(6378249.145,
+shared_ptr<const Ellipsoid> Ellipsoid::Clarke1880() {
+	static shared_ptr<const Ellipsoid> singleton = fromAAndInverseF(6378249.145,
 			293.465);
 	return singleton;
 }
 
-shared_ptr<Ellipsoid> Ellipsoid::Sphere() {
-	static shared_ptr<Ellipsoid> singleton = fromAAndF(6371000, 0.0);
+shared_ptr<const Ellipsoid> Ellipsoid::Sphere() {
+	static shared_ptr<const Ellipsoid> singleton = fromAAndF(6371000, 0.0);
 	return singleton;
 }
 
-shared_ptr<Ellipsoid> Ellipsoid::fromAAndInverseF(double semiMajor,
+shared_ptr<const Ellipsoid> Ellipsoid::fromAAndInverseF(double semiMajor,
 		double inverseFlattening) {
 	double f = 1.0 / inverseFlattening;
 	double b = (1.0 - f) * semiMajor;
 
-	return shared_ptr<Ellipsoid> (new Ellipsoid(semiMajor, b, f,
+	return shared_ptr<const Ellipsoid> (new Ellipsoid(semiMajor, b, f,
 			inverseFlattening));
 }
 
-shared_ptr<Ellipsoid> Ellipsoid::fromAAndF(double semiMajor, double flattening) {
+shared_ptr<const Ellipsoid> Ellipsoid::fromAAndF(double semiMajor, double flattening) {
 	double inverseF = 1.0 / flattening;
 	double b = (1.0 - flattening) * semiMajor;
 
-	return shared_ptr<Ellipsoid> (new Ellipsoid(semiMajor, b, flattening,
+	return shared_ptr<const Ellipsoid> (new Ellipsoid(semiMajor, b, flattening,
 			inverseF));
 }
 

@@ -42,28 +42,28 @@ public:
 
 public:
 	/** The WGS84 ellipsoid. */
-	static std::tr1::shared_ptr<Ellipsoid> WGS84();
+	static std::tr1::shared_ptr<const Ellipsoid> WGS84();
 
 	/** The GRS80 ellipsoid. */
-	static std::tr1::shared_ptr<Ellipsoid> GRS80();
+	static std::tr1::shared_ptr<const Ellipsoid> GRS80();
 
 	/** The GRS67 ellipsoid. */
-	static std::tr1::shared_ptr<Ellipsoid> GRS67();
+	static std::tr1::shared_ptr<const Ellipsoid> GRS67();
 
 	/** The ANS ellipsoid. */
-	static std::tr1::shared_ptr<Ellipsoid> ANS();
+	static std::tr1::shared_ptr<const Ellipsoid> ANS();
 
 	/** The WGS72 ellipsoid. */
-	static std::tr1::shared_ptr<Ellipsoid> WGS72();
+	static std::tr1::shared_ptr<const Ellipsoid> WGS72();
 
 	/** The Clarke1858 ellipsoid. */
-	static std::tr1::shared_ptr<Ellipsoid> Clarke1858();
+	static std::tr1::shared_ptr<const Ellipsoid> Clarke1858();
 
 	/** The Clarke1880 ellipsoid. */
-	static std::tr1::shared_ptr<Ellipsoid> Clarke1880();
+	static std::tr1::shared_ptr<const Ellipsoid> Clarke1880();
 
 	/** A spherical "ellipsoid". */
-	static std::tr1::shared_ptr<Ellipsoid> Sphere();
+	static std::tr1::shared_ptr<const Ellipsoid> Sphere();
 
 	/**
 	 * Build an Ellipsoid from the semi major axis measurement and the inverse flattening.
@@ -71,8 +71,8 @@ public:
 	 * @param inverseFlattening
 	 * @return
 	 */
-	static std::tr1::shared_ptr<Ellipsoid> fromAAndInverseF(double semiMajor,
-			double inverseFlattening);
+	static std::tr1::shared_ptr<const Ellipsoid> fromAAndInverseF(
+			double semiMajor, double inverseFlattening);
 
 	/**
 	 * Build an Ellipsoid from the semi major axis measurement and the flattening.
@@ -80,7 +80,7 @@ public:
 	 * @param flattening
 	 * @return
 	 */
-	static std::tr1::shared_ptr<Ellipsoid> fromAAndF(double semiMajor,
+	static std::tr1::shared_ptr<const Ellipsoid> fromAAndF(double semiMajor,
 			double flattening);
 
 	/**
@@ -106,7 +106,6 @@ public:
 	 * @return
 	 */
 	double getInverseFlattening() const;
-
 
 private:
 	/** Semi major axis (meters). */

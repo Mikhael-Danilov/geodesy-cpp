@@ -12,7 +12,7 @@ FILE(GLOB SOURCES "*.cpp")
 
 add_executable(geoUnitTests ${SOURCES})
 
-target_link_libraries(geoUnitTests cppunit m)
+target_link_libraries(geoUnitTests geodesy cppunit m)
 
 add_custom_target(run_tests
                   COMMAND ${CMAKE_CURRENT_BINARY_DIR}/geoUnitTests

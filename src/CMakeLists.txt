@@ -2,11 +2,11 @@ cmake_minimum_required (VERSION 2.6)
 
 FILE(GLOB SOURCES "*.cpp")
 
-add_library(geo SHARED ${SOURCES})
+add_library(geodesy SHARED ${SOURCES})
 
 include_directories(.)
 
 # install information
 file(GLOB INCLUDES "*.hpp")
-install(FILES ${INCLUDES} DESTINATION include/geo)
-install(TARGETS geo DESTINATION lib)
+install(FILES ${INCLUDES} DESTINATION include/geodesy)
+install(TARGETS geodesy DESTINATION lib)

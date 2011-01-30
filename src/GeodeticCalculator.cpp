@@ -37,13 +37,13 @@ using namespace std;
 using namespace std::tr1;
 
 shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinates(
-		const Ellipsoid &ellipsoid, const GlobalCoordinates &start,
+		shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
 		double startBearing, double distance, double &endBearing) {
-	double a = ellipsoid.getSemiMajorAxis();
-	double b = ellipsoid.getSemiMinorAxis();
+	double a = ellipsoid->getSemiMajorAxis();
+	double b = ellipsoid->getSemiMinorAxis();
 	double aSquared = a * a;
 	double bSquared = b * b;
-	double f = ellipsoid.getFlattening();
+	double f = ellipsoid->getFlattening();
 	double phi1 = Angle::toRadians(start.getLatitude());
 	double alpha1 = Angle::toRadians(startBearing);
 	double cosAlpha1 = cos(alpha1);
@@ -149,7 +149,7 @@ shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinat
 }
 
 shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinates(
-		const Ellipsoid &ellipsoid, const GlobalCoordinates &start,
+		shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
 		double startBearing, double distance) {
 	double dummy;
 	return calculateEndingGlobalCoordinates(ellipsoid, start, startBearing,
@@ -157,7 +157,7 @@ shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinat
 }
 
 shared_ptr<GeodeticCurve> GeodeticCalculator::calculateGeodeticCurve(
-		const Ellipsoid &ellipsoid, const GlobalCoordinates &start,
+		shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
 		const GlobalCoordinates &end) {
 	//
 	// All equation numbers refer back to Vincenty's publication:
@@ -165,9 +165,9 @@ shared_ptr<GeodeticCurve> GeodeticCalculator::calculateGeodeticCurve(
 	//
 
 	// get constants
-	double a = ellipsoid.getSemiMajorAxis();
-	double b = ellipsoid.getSemiMinorAxis();
-	double f = ellipsoid.getFlattening();
+	double a = ellipsoid->getSemiMajorAxis();
+	double b = ellipsoid->getSemiMinorAxis();
+	double f = ellipsoid->getFlattening();
 
 	// get parameters as radians
 	double phi1 = Angle::toRadians(start.getLatitude());
@@ -317,7 +317,7 @@ shared_ptr<GeodeticCurve> GeodeticCalculator::calculateGeodeticCurve(
 	return shared_ptr<GeodeticCurve> (new GeodeticCurve(s, alpha1, alpha2));
 }
 shared_ptr<GeodeticMeasurement> GeodeticCalculator::calculateGeodeticMeasurement(
-		const Ellipsoid &refEllipsoid, const GlobalPosition &start,
+		shared_ptr<const Ellipsoid> refEllipsoid, const GlobalPosition &start,
 		const GlobalPosition &end) {
 	// calculate elevation differences
 	double elev1 = start.getElevation();
@@ -330,13 +330,13 @@ shared_ptr<GeodeticMeasurement> GeodeticCalculator::calculateGeodeticMeasurement
 	double phi12 = (phi1 + phi2) / 2.0;
 
 	// calculate a new ellipsoid to accommodate average elevation
-	double refA = refEllipsoid.getSemiMajorAxis();
-	double f = refEllipsoid.getFlattening();
+	double refA = refEllipsoid->getSemiMajorAxis();
+	double f = refEllipsoid->getFlattening();
 	double a = refA + elev12 * (1.0 + f * sin(phi12));
-	shared_ptr<Ellipsoid> ellipsoid = Ellipsoid::fromAAndF(a, f);
+	shared_ptr<const Ellipsoid> ellipsoid = Ellipsoid::fromAAndF(a, f);
 
 	// calculate the curve at the average elevation
-	shared_ptr<GeodeticCurve> averageCurve = calculateGeodeticCurve(*ellipsoid,
+	shared_ptr<GeodeticCurve> averageCurve = calculateGeodeticCurve(ellipsoid,
 			start, end);
 
 	// return the measurement

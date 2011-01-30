@@ -70,8 +70,8 @@ void GeodeticCalculatorTest::testCalculateGeodeticMeasurement() {
 
 	// calculate the geodetic measurement
 	shared_ptr<GeodeticMeasurement> geoMeasurement =
-			GeodeticCalculator::calculateGeodeticMeasurement(reference, pikesPeak,
-					alcatrazIsland);
+			GeodeticCalculator::calculateGeodeticMeasurement(reference,
+					pikesPeak, alcatrazIsland);
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(-4301.0, geoMeasurement->getElevationChange(), 0.001);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(1521788.826, geoMeasurement->getPointToPointDistance(), 0.001);
@@ -80,10 +80,7 @@ void GeodeticCalculatorTest::testCalculateGeodeticMeasurement() {
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(80.38029386, geoMeasurement->getReverseAzimuth(), 0.0000001);
 }
 
-#if 0
-
-void GeodeticCalculatorTest::testAntiPodal1()
-{
+void GeodeticCalculatorTest::testAntiPodal1() {
 	// select a reference elllipsoid
 	shared_ptr<const Ellipsoid> reference = Ellipsoid::WGS84();
 
@@ -94,93 +91,77 @@ void GeodeticCalculatorTest::testAntiPodal1()
 	GlobalCoordinates p2(-10, -100);
 
 	// calculate the geodetic measurement
-	shared_ptr<GeodeticCurve> geoCurve = geoCalc.calculateGeodeticCurve(reference, p1, p2);
+	shared_ptr<GeodeticCurve> geoCurve =
+			GeodeticCalculator::calculateGeodeticCurve(reference, p1, p2);
 
-	assertEquals( 19970718.422432076, geoCurve.getEllipsoidalDistance(), 0.001);
-	assertEquals(90.0004877491174, geoCurve.getAzimuth(), 0.0000001);
-	assertEquals(270.0004877491174, geoCurve.getReverseAzimuth(), 0.0000001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL( 19970718.422432076, geoCurve->getEllipsoidalDistance(), 0.001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(90.0004877491174, geoCurve->getAzimuth(), 0.0000001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(270.0004877491174, geoCurve->getReverseAzimuth(), 0.0000001);
 }
-
-public void testAntiPodal2()
-{
-	// instantiate the calculator
-	GeodeticCalculator geoCalc = new GeodeticCalculator();
-
+void GeodeticCalculatorTest::testAntiPodal2() {
 	// select a reference elllipsoid
-	Ellipsoid reference = Ellipsoid.WGS84;
+	shared_ptr<const Ellipsoid> reference = Ellipsoid::WGS84();
 
 	// set position 1
-	GlobalCoordinates p1;
-	p1 = new GlobalCoordinates(11, 80);
+	GlobalCoordinates p1(11, 80);
 
 	// set position 2
-	GlobalCoordinates p2;
-	p2 = new GlobalCoordinates(-10, -100);
+	GlobalCoordinates p2(-10, -100);
 
 	// calculate the geodetic measurement
-	GeodeticCurve geoCurve;
+	shared_ptr<GeodeticCurve> geoCurve =
+			GeodeticCalculator::calculateGeodeticCurve(reference, p1, p2);
 
-	geoCurve = geoCalc.calculateGeodeticCurve(reference, p1, p2);
-
-	assertEquals( 19893320.272061437, geoCurve.getEllipsoidalDistance(), 0.001);
-	assertEquals(360.0, geoCurve.getAzimuth(), 0.0000001);
-	assertEquals(0.0, geoCurve.getReverseAzimuth(), 0.0000001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL( 19893320.272061437, geoCurve->getEllipsoidalDistance(), 0.001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(360.0, geoCurve->getAzimuth(), 0.0000001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.0, geoCurve->getReverseAzimuth(), 0.0000001);
 }
 
-public void testInverseWithDirect()
-{
-	// instantiate the calculator
-	GeodeticCalculator geoCalc = new GeodeticCalculator();
-
+void GeodeticCalculatorTest::testInverseWithDirect() {
 	// select a reference elllipsoid
-	Ellipsoid reference = Ellipsoid.WGS84;
+	shared_ptr<const Ellipsoid> reference = Ellipsoid::WGS84();
 
 	// set Lincoln Memorial coordinates
-	GlobalCoordinates lincolnMemorial;
-	lincolnMemorial = new GlobalCoordinates(38.88922, -77.04978);
+	GlobalCoordinates lincolnMemorial(38.88922, -77.04978);
 
 	// set Eiffel Tower coordinates
-	GlobalCoordinates eiffelTower;
-	eiffelTower = new GlobalCoordinates(48.85889, 2.29583);
+	GlobalCoordinates eiffelTower(48.85889, 2.29583);
 
 	// calculate the geodetic curve
-	GeodeticCurve geoCurve = geoCalc.calculateGeodeticCurve(reference, lincolnMemorial, eiffelTower);
+	shared_ptr<GeodeticCurve> geoCurve =
+			GeodeticCalculator::calculateGeodeticCurve(reference,
+					lincolnMemorial, eiffelTower);
 
 	// now, plug the result into to direct solution
-	GlobalCoordinates dest;
-	double[] endBearing = new double[1];
+	double endBearing;
+	shared_ptr<GlobalCoordinates> dest =
+			GeodeticCalculator::calculateEndingGlobalCoordinates(reference,
+					lincolnMemorial, geoCurve->getAzimuth(),
+					geoCurve->getEllipsoidalDistance(), endBearing);
 
-	dest = geoCalc.calculateEndingGlobalCoordinates(reference, lincolnMemorial, geoCurve.getAzimuth(), geoCurve.getEllipsoidalDistance(), endBearing);
-
-	assertEquals( eiffelTower.getLatitude(), dest.getLatitude(), 0.0000001 );
-	assertEquals( eiffelTower.getLongitude(), dest.getLongitude(), 0.0000001 );
+	CPPUNIT_ASSERT_DOUBLES_EQUAL( eiffelTower.getLatitude(), dest->getLatitude(), 0.0000001 );
+	CPPUNIT_ASSERT_DOUBLES_EQUAL( eiffelTower.getLongitude(), dest->getLongitude(), 0.0000001 );
 }
 
-public void testPoleCrossing()
-{
-	// instantiate the calculator
-	GeodeticCalculator geoCalc = new GeodeticCalculator();
-
+void GeodeticCalculatorTest::testPoleCrossing() {
 	// select a reference elllipsoid
-	Ellipsoid reference = Ellipsoid.WGS84;
+	shared_ptr<const Ellipsoid> reference = Ellipsoid::WGS84();
 
 	// set Lincoln Memorial coordinates
-	GlobalCoordinates lincolnMemorial;
-	lincolnMemorial = new GlobalCoordinates(38.88922, -77.04978);
+	GlobalCoordinates lincolnMemorial(38.88922, -77.04978);
 
 	// set a bearing of 1.0deg (almost straight up) and a distance
 	double startBearing = 1.0;
 	double distance = 6179016.13586;
 
 	// set the expected destination
-	GlobalCoordinates expected;
-	expected = new GlobalCoordinates(85.60006433, 92.17243943);
+	GlobalCoordinates expected(85.60006433, 92.17243943);
 
 	// calculate the ending global coordinates
-	GlobalCoordinates dest = geoCalc.calculateEndingGlobalCoordinates(reference, lincolnMemorial, startBearing, distance );
+	shared_ptr<GlobalCoordinates> dest =
+			GeodeticCalculator::calculateEndingGlobalCoordinates(reference,
+					lincolnMemorial, startBearing, distance);
 
-	assertEquals(expected.getLatitude(), dest.getLatitude(), 0.0000001);
-	assertEquals(expected.getLongitude(), dest.getLongitude(), 0.0000001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected.getLatitude(), dest->getLatitude(), 0.0000001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected.getLongitude(), dest->getLongitude(), 0.0000001);
 }
-}
-#endif

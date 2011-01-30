@@ -29,13 +29,105 @@
 #ifndef GEODESY_GEODETIC_CALCULATOR
 #define GEODESY_GEODETIC_CALCULATOR
 
+#include <cmath>
+#include <tr1/memory>
+
+#include "GeodeticMeasurement.hpp"
+#include "GeodeticCurve.hpp"
+#include "GlobalCoordinates.hpp"
+#include "Ellipsoid.hpp"
+#include "GlobalPosition.hpp"
+
 /**
  * Geodesy library based upon the Java version at
  * http://www.gavaghan.org/blog/free-source-code/geodesy-library-vincentys-formula-java/
  */
 namespace geodesy {
 
+/**
+ * <p>
+ * Implementation of Thaddeus Vincenty's algorithms to solve the direct and
+ * inverse geodetic problems. For more information, see Vincent's original
+ * publication on the NOAA website:
+ * </p>
+ * See http://www.ngs.noaa.gov/PUBS_LIB/inverse.pdf
+ *
+ */
 class GeodeticCalculator {
+public:
+	virtual ~GeodeticCalculator();
+
+	/**
+	 * Calculate the destination and final bearing after traveling a specified
+	 * distance, and a specified starting bearing, for an initial location. This
+	 * is the solution to the direct geodetic problem.
+	 *
+	 * @param ellipsoid reference ellipsoid to use
+	 * @param start starting location
+	 * @param startBearing starting bearing (degrees)
+	 * @param distance distance to travel (meters)
+	 * @param endBearing bearing at destination (degrees) (output value)
+	 * @return
+	 */
+	static std::tr1::shared_ptr<GlobalCoordinates> calculateEndingGlobalCoordinates(
+			const Ellipsoid &ellipsoid, const GlobalCoordinates &start,
+			double startBearing, double distance, double &endBearing);
+
+	/**
+	 * Calculate the destination after traveling a specified distance, and a
+	 * specified starting bearing, for an initial location. This is the solution
+	 * to the direct geodetic problem.
+	 *
+	 * @param ellipsoid reference ellipsoid to use
+	 * @param start starting location
+	 * @param startBearing starting bearing (degrees)
+	 * @param distance distance to travel (meters)
+	 * @return
+	 */
+	static std::tr1::shared_ptr<GlobalCoordinates> calculateEndingGlobalCoordinates(
+			const Ellipsoid &ellipsoid, const GlobalCoordinates &start,
+			double startBearing, double distance);
+
+	/**
+	 * Calculate the geodetic curve between two points on a specified reference
+	 * ellipsoid. This is the solution to the inverse geodetic problem.
+	 *
+	 * @param ellipsoid reference ellipsoid to use
+	 * @param start starting coordinates
+	 * @param end ending coordinates
+	 * @return
+	 */
+	static std::tr1::shared_ptr<GeodeticCurve> calculateGeodeticCurve(
+			const Ellipsoid &ellipsoid, const GlobalCoordinates &start,
+			const GlobalCoordinates &end);
+
+	/**
+	 * <p>
+	 * Calculate the three dimensional geodetic measurement between two positions
+	 * measured in reference to a specified ellipsoid.
+	 * </p>
+	 * <p>
+	 * This calculation is performed by first computing a new ellipsoid by
+	 * expanding or contracting the reference ellipsoid such that the new
+	 * ellipsoid passes through the average elevation of the two positions. A
+	 * geodetic curve across the new ellisoid is calculated. The point-to-point
+	 * distance is calculated as the hypotenuse of a right triangle where the
+	 * length of one side is the ellipsoidal distance and the other is the
+	 * difference in elevation.
+	 * </p>
+	 *
+	 * @param refEllipsoid reference ellipsoid to use
+	 * @param start starting position
+	 * @param end ending position
+	 * @return
+	 */
+	static std::tr1::shared_ptr<GeodeticMeasurement> calculateGeodeticMeasurement(
+			const Ellipsoid &refEllipsoid, const GlobalPosition &start,
+			const GlobalPosition &end);
+
+private:
+	// no instances
+	GeodeticCalculator() {}
 
 };
 

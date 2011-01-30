@@ -90,7 +90,6 @@ bool GlobalPosition::operator>=(const GlobalPosition &other) const {
 }
 
 std::ostream& operator<<(std::ostream& os, const GlobalPosition& obj) {
-	//FIXME how to do super.toString() here?
 	os << static_cast<const GlobalCoordinates &> (obj) //
 			<< "elevation=" << obj.getElevation() << "m";
 

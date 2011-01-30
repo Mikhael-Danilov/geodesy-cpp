@@ -41,9 +41,6 @@ public:
 	virtual ~Ellipsoid();
 
 public:
-	//FIXME make these constants be static functions with a static variable to ensure
-	// order or elaboration
-
 	/** The WGS84 ellipsoid. */
 	static std::tr1::shared_ptr<Ellipsoid> WGS84();
 

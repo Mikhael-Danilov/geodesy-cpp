@@ -69,7 +69,7 @@ public:
 	/**
 	 * Get the point-to-point distance.
 	 *
-	 * @return the distance travelled, in meters, going from one point to the
+	 * @return the distance traveled, in meters, going from one point to the
 	 *         next
 	 */
 	double getPointToPointDistance() const;

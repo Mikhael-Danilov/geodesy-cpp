@@ -67,7 +67,7 @@ public:
 	 * @param startBearing starting bearing (degrees)
 	 * @param distance distance to travel (meters)
 	 * @param endBearing bearing at destination (degrees) (output value)
-	 * @return
+	 * @return the ending location
 	 */
 	static std::tr1::shared_ptr<GlobalCoordinates> calculateEndingGlobalCoordinates(
 			std::tr1::shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
@@ -82,7 +82,7 @@ public:
 	 * @param start starting location
 	 * @param startBearing starting bearing (degrees)
 	 * @param distance distance to travel (meters)
-	 * @return
+	 * @return the ending location
 	 */
 	static std::tr1::shared_ptr<GlobalCoordinates> calculateEndingGlobalCoordinates(
 			std::tr1::shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
@@ -95,9 +95,9 @@ public:
 	 * @param ellipsoid reference ellipsoid to use
 	 * @param start starting coordinates
 	 * @param end ending coordinates
-	 * @return
+	 * @return the curve
 	 */
-	static std::tr1::shared_ptr<GeodeticCurve> calculateGeodeticCurve(
+	static std::tr1::shared_ptr<GeodetipcCurve> calculateGeodeticCurve(
 			std::tr1::shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
 			const GlobalCoordinates &end);
 
@@ -110,7 +110,7 @@ public:
 	 * This calculation is performed by first computing a new ellipsoid by
 	 * expanding or contracting the reference ellipsoid such that the new
 	 * ellipsoid passes through the average elevation of the two positions. A
-	 * geodetic curve across the new ellisoid is calculated. The point-to-point
+	 * geodetic curve across the new ellipsoid is calculated. The point-to-point
 	 * distance is calculated as the hypotenuse of a right triangle where the
 	 * length of one side is the ellipsoidal distance and the other is the
 	 * difference in elevation.
@@ -119,7 +119,7 @@ public:
 	 * @param refEllipsoid reference ellipsoid to use
 	 * @param start starting position
 	 * @param end ending position
-	 * @return
+	 * @return the measurement
 	 */
 	static std::tr1::shared_ptr<GeodeticMeasurement> calculateGeodeticMeasurement(
 			std::tr1::shared_ptr<const Ellipsoid> refEllipsoid, const GlobalPosition &start,

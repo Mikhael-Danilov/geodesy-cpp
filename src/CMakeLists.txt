@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 
 FILE(GLOB SOURCES "*.cpp")
 
-add_library(geodesy SHARED ${SOURCES})
+add_library(geodesy STATIC ${SOURCES})
 
 include_directories(.)
 

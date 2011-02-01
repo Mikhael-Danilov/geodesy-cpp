@@ -97,7 +97,7 @@ public:
 	 * @param end ending coordinates
 	 * @return the curve
 	 */
-	static std::tr1::shared_ptr<GeodetipcCurve> calculateGeodeticCurve(
+	static std::tr1::shared_ptr<GeodeticCurve> calculateGeodeticCurve(
 			std::tr1::shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
 			const GlobalCoordinates &end);
 

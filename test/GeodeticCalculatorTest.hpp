@@ -18,6 +18,8 @@ CPPUNIT_TEST_SUITE( GeodeticCalculatorTest);
 		CPPUNIT_TEST(testAntiPodal2);
 		CPPUNIT_TEST(testInverseWithDirect);
 		CPPUNIT_TEST(testPoleCrossing);
+		CPPUNIT_TEST(testZeroDistance);
+		CPPUNIT_TEST(testNanAzimuth);
 
 	CPPUNIT_TEST_SUITE_END();
 
@@ -28,6 +30,8 @@ protected:
 	void testAntiPodal2();
 	void testInverseWithDirect();
 	void testPoleCrossing();
+	void testZeroDistance();
+	void testNanAzimuth();
 
 };
 

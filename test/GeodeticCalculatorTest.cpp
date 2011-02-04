@@ -32,6 +32,7 @@
 
 #include <GeodeticCalculator.hpp>
 #include <tr1/memory>
+#include <cmath>
 
 using namespace geodesy;
 using namespace std;
@@ -164,4 +165,33 @@ void GeodeticCalculatorTest::testPoleCrossing() {
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected.getLatitude(), dest->getLatitude(), 0.0000001);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected.getLongitude(), dest->getLongitude(), 0.0000001);
+}
+
+void GeodeticCalculatorTest::testZeroDistance() {
+	GlobalCoordinates lincolnMemorial(38.88922, -77.04978);
+	double startBearing = 1.0;
+	double distance = 0;
+
+	shared_ptr<GlobalCoordinates>
+			dest =
+					GeodeticCalculator::calculateEndingGlobalCoordinates(
+							Ellipsoid::WGS84(), lincolnMemorial, startBearing,
+							distance);
+	CPPUNIT_ASSERT_EQUAL(lincolnMemorial, *dest);
+}
+
+void GeodeticCalculatorTest::testNanAzimuth() {
+	GlobalCoordinates lincolnMemorial(38.88922, -77.04978);
+	double startBearing = nan("foo");
+	double distance = 6179016.13586;
+	bool exception = false;
+
+	try {
+		shared_ptr<GlobalCoordinates> dest =
+				GeodeticCalculator::calculateEndingGlobalCoordinates(
+						Ellipsoid::WGS84(), lincolnMemorial, startBearing, 0);
+	} catch (InvalidAzimuthException e) {
+		exception = true;
+	}
+	CPPUNIT_ASSERT_EQUAL_MESSAGE("Should have gotten an exception", true, exception);
 }

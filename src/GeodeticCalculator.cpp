@@ -38,7 +38,12 @@ using namespace std::tr1;
 
 shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinates(
 		shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
-		double startBearing, double distance, double &endBearing) {
+		double startBearing, double distance, double &endBearing)
+		throw (InvalidAzimuthException) {
+	if (isnan(startBearing)) {
+		throw InvalidAzimuthException();
+	}
+
 	double a = ellipsoid->getSemiMajorAxis();
 	double b = ellipsoid->getSemiMinorAxis();
 	double aSquared = a * a;
@@ -150,7 +155,7 @@ shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinat
 
 shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinates(
 		shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
-		double startBearing, double distance) {
+		double startBearing, double distance) throw (InvalidAzimuthException) {
 	double dummy;
 	return calculateEndingGlobalCoordinates(ellipsoid, start, startBearing,
 			distance, dummy);

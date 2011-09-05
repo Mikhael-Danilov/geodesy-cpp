@@ -39,20 +39,22 @@ GeodeticMeasurement::~GeodeticMeasurement() {
 
 GeodeticMeasurement::GeodeticMeasurement(double ellipsoidalDistance,
 		double azimuth, double reverseAzimuth, double elevationChange) :
-	GeodeticCurve(ellipsoidalDistance, azimuth, reverseAzimuth),
-			mElevationChange(elevationChange), mP2P(
-					sqrt(ellipsoidalDistance * ellipsoidalDistance
-							+ mElevationChange * mElevationChange)) {
+		GeodeticCurve(ellipsoidalDistance, azimuth, reverseAzimuth), mElevationChange(
+				elevationChange), mP2P(
+				sqrt(
+						ellipsoidalDistance * ellipsoidalDistance
+								+ mElevationChange * mElevationChange)) {
 }
 
 GeodeticMeasurement::GeodeticMeasurement(const GeodeticCurve &averageCurve,
 		double elevationChange) :
-	GeodeticCurve(averageCurve.getEllipsoidalDistance(),
-			averageCurve.getAzimuth(), averageCurve.getReverseAzimuth()),
-			mElevationChange(elevationChange), mP2P(sqrt(
-					averageCurve.getEllipsoidalDistance()
-							* averageCurve.getEllipsoidalDistance()
-							+ mElevationChange * mElevationChange)) {
+		GeodeticCurve(averageCurve.getEllipsoidalDistance(),
+				averageCurve.getAzimuth(), averageCurve.getReverseAzimuth()), mElevationChange(
+				elevationChange), mP2P(
+				sqrt(
+						averageCurve.getEllipsoidalDistance()
+								* averageCurve.getEllipsoidalDistance()
+								+ mElevationChange * mElevationChange)) {
 }
 
 double GeodeticMeasurement::getElevationChange() const {
@@ -64,7 +66,7 @@ double GeodeticMeasurement::getPointToPointDistance() const {
 }
 
 std::ostream& operator<<(std::ostream& os, const GeodeticMeasurement& obj) {
-	os << static_cast<const GeodeticCurve &> (obj) //
+	os << static_cast<const GeodeticCurve &>(obj) //
 			<< "elev12=" << obj.getElevationChange() //
 			<< ";p2p=" << obj.getPointToPointDistance();
 

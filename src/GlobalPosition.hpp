@@ -32,6 +32,7 @@
 #include "GlobalCoordinates.hpp"
 
 #include <ostream>
+#include <tr1/memory>
 
 namespace geodesy {
 
@@ -46,8 +47,11 @@ namespace geodesy {
  * </p>
  *
  */
-class GlobalPosition : public GlobalCoordinates {
+class GlobalPosition: public GlobalCoordinates {
 public:
+	typedef std::tr1::shared_ptr<GlobalPosition> Ptr;
+	typedef std::tr1::shared_ptr<GlobalPosition const> ConstPtr;
+
 	virtual ~GlobalPosition();
 
 	/**

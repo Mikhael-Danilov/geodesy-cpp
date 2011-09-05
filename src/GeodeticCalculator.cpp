@@ -34,12 +34,11 @@
 namespace geodesy {
 
 using namespace std;
-using namespace std::tr1;
 
-shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinates(
-		shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
+GlobalCoordinates::Ptr GeodeticCalculator::calculateEndingGlobalCoordinates(
+		Ellipsoid::ConstPtr ellipsoid, const GlobalCoordinates &start,
 		double startBearing, double distance, double &endBearing)
-		throw (InvalidAzimuthException) {
+				throw (InvalidAzimuthException) {
 	if (isnan(startBearing)) {
 		throw InvalidAzimuthException();
 	}
@@ -69,12 +68,20 @@ shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinat
 	double uSquared = cos2Alpha * (aSquared - bSquared) / bSquared;
 
 	// eq. 3
-	double A = 1 + (uSquared / 16384) * (4096 + uSquared * (-768 + uSquared
-			* (320 - 175 * uSquared)));
+	double A =
+			1
+					+ (uSquared / 16384)
+							* (4096
+									+ uSquared
+											* (-768
+													+ uSquared
+															* (320
+																	- 175
+																			* uSquared)));
 
 	// eq. 4
-	double B = (uSquared / 1024) * (256 + uSquared * (-128 + uSquared * (74
-			- 47 * uSquared)));
+	double B = (uSquared / 1024)
+			* (256 + uSquared * (-128 + uSquared * (74 - 47 * uSquared)));
 
 	// iterate until there is a negligible change in sigma
 	double deltaSigma;
@@ -95,9 +102,13 @@ shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinat
 		double cosSignma = cos(sigma);
 
 		// eq. 6
-		deltaSigma = B * sinSigma * (cosSigmaM2 + (B / 4.0) * (cosSignma * (-1
-				+ 2 * cos2SigmaM2) - (B / 6.0) * cosSigmaM2 * (-3 + 4
-				* sinSigma * sinSigma) * (-3 + 4 * cos2SigmaM2)));
+		deltaSigma = B * sinSigma
+				* (cosSigmaM2
+						+ (B / 4.0)
+								* (cosSignma * (-1 + 2 * cos2SigmaM2)
+										- (B / 6.0) * cosSigmaM2
+												* (-3 + 4 * sinSigma * sinSigma)
+												* (-3 + 4 * cos2SigmaM2)));
 
 		// eq. 7
 		sigma = sOverbA + deltaSigma;
@@ -117,9 +128,15 @@ shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinat
 	sinSigma = sin(sigma);
 
 	// eq. 8
-	double phi2 = atan2(sinU1 * cosSigma + cosU1 * sinSigma * cosAlpha1, (1.0
-			- f) * sqrt(sin2Alpha + pow(sinU1 * sinSigma - cosU1 * cosSigma
-			* cosAlpha1, 2.0)));
+	double phi2 = atan2(
+			sinU1 * cosSigma + cosU1 * sinSigma * cosAlpha1,
+			(1.0 - f)
+					* sqrt(
+							sin2Alpha
+									+ pow(
+											sinU1 * sinSigma
+													- cosU1 * cosSigma
+															* cosAlpha1, 2.0)));
 
 	// eq. 9
 	// This fixes the pole crossing defect spotted by Matt Feemster. When a
@@ -129,19 +146,24 @@ shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinat
 	// lines.
 	// double tanLambda = sinSigma * sinAlpha1 / (cosU1 * cosSigma - sinU1 * sinSigma * cosAlpha1);
 	// double lambda = atan(tanLambda);
-	double lambda = atan2(sinSigma * sinAlpha1, (cosU1 * cosSigma - sinU1
-			* sinSigma * cosAlpha1));
+	double lambda = atan2(sinSigma * sinAlpha1,
+			(cosU1 * cosSigma - sinU1 * sinSigma * cosAlpha1));
 
 	// eq. 10
 	double C = (f / 16) * cos2Alpha * (4 + f * (4 - 3 * cos2Alpha));
 
 	// eq. 11
-	double L = lambda - (1 - C) * f * sinAlpha * (sigma + C * sinSigma
-			* (cosSigmaM2 + C * cosSigma * (-1 + 2 * cos2SigmaM2)));
+	double L = lambda
+			- (1 - C) * f * sinAlpha
+					* (sigma
+							+ C * sinSigma
+									* (cosSigmaM2
+											+ C * cosSigma
+													* (-1 + 2 * cos2SigmaM2)));
 
 	// eq. 12
-	double alpha2 = atan2(sinAlpha, -sinU1 * sinSigma + cosU1 * cosSigma
-			* cosAlpha1);
+	double alpha2 = atan2(sinAlpha,
+			-sinU1 * sinSigma + cosU1 * cosSigma * cosAlpha1);
 
 	// build result
 	double latitude = Angle::toDegrees(phi2);
@@ -149,20 +171,19 @@ shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinat
 
 	endBearing = Angle::toDegrees(alpha2);
 
-	return shared_ptr<GlobalCoordinates> (new GlobalCoordinates(latitude,
-			longitude));
+	return GlobalCoordinates::Ptr(new GlobalCoordinates(latitude, longitude));
 }
 
-shared_ptr<GlobalCoordinates> GeodeticCalculator::calculateEndingGlobalCoordinates(
-		shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
+GlobalCoordinates::Ptr GeodeticCalculator::calculateEndingGlobalCoordinates(
+		Ellipsoid::ConstPtr ellipsoid, const GlobalCoordinates &start,
 		double startBearing, double distance) throw (InvalidAzimuthException) {
 	double dummy;
 	return calculateEndingGlobalCoordinates(ellipsoid, start, startBearing,
 			distance, dummy);
 }
 
-shared_ptr<GeodeticCurve> GeodeticCalculator::calculateGeodeticCurve(
-		shared_ptr<const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
+GeodeticCurve::Ptr GeodeticCalculator::calculateGeodeticCurve(
+		Ellipsoid::ConstPtr ellipsoid, const GlobalCoordinates &start,
 		const GlobalCoordinates &end) {
 	//
 	// All equation numbers refer back to Vincenty's publication:
@@ -223,8 +244,8 @@ shared_ptr<GeodeticCurve> GeodeticCalculator::calculateGeodeticCurve(
 
 		// eq. 14
 		double sin2sigma = (cosU2 * sinlambda * cosU2 * sinlambda)
-				+ (cosU1sinU2 - sinU1cosU2 * coslambda) * (cosU1sinU2
-						- sinU1cosU2 * coslambda);
+				+ (cosU1sinU2 - sinU1cosU2 * coslambda)
+						* (cosU1sinU2 - sinU1cosU2 * coslambda);
 		double sinsigma = sqrt(sin2sigma);
 
 		// eq. 15
@@ -234,15 +255,15 @@ shared_ptr<GeodeticCurve> GeodeticCalculator::calculateGeodeticCurve(
 		sigma = atan2(sinsigma, cossigma);
 
 		// eq. 17 Careful! sin2sigma might be almost 0!
-		double sinalpha = (sin2sigma == 0) ? 0.0 : cosU1cosU2 * sinlambda
-				/ sinsigma;
+		double sinalpha =
+				(sin2sigma == 0) ? 0.0 : cosU1cosU2 * sinlambda / sinsigma;
 		double alpha = asin(sinalpha);
 		double cosalpha = cos(alpha);
 		double cos2alpha = cosalpha * cosalpha;
 
 		// eq. 18 Careful! cos2alpha might be almost 0!
-		double cos2sigmam = cos2alpha == 0.0 ? 0.0 : cossigma - 2 * sinU1sinU2
-				/ cos2alpha;
+		double cos2sigmam =
+				cos2alpha == 0.0 ? 0.0 : cossigma - 2 * sinU1sinU2 / cos2alpha;
 		double u2 = cos2alpha * a2b2b2;
 
 		double cos2sigmam2 = cos2sigmam * cos2sigmam;
@@ -254,16 +275,28 @@ shared_ptr<GeodeticCurve> GeodeticCalculator::calculateGeodeticCurve(
 		B = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
 
 		// eq. 6
-		deltasigma = B * sinsigma * (cos2sigmam + B / 4 * (cossigma * (-1 + 2
-				* cos2sigmam2) - B / 6 * cos2sigmam * (-3 + 4 * sin2sigma)
-				* (-3 + 4 * cos2sigmam2)));
+		deltasigma = B * sinsigma
+				* (cos2sigmam
+						+ B / 4
+								* (cossigma * (-1 + 2 * cos2sigmam2)
+										- B / 6 * cos2sigmam
+												* (-3 + 4 * sin2sigma)
+												* (-3 + 4 * cos2sigmam2)));
 
 		// eq. 10
 		double C = f / 16 * cos2alpha * (4 + f * (4 - 3 * cos2alpha));
 
 		// eq. 11 (modified)
-		lambda = omega + (1 - C) * f * sinalpha * (sigma + C * sinsigma
-				* (cos2sigmam + C * cossigma * (-1 + 2 * cos2sigmam2)));
+		lambda =
+				omega
+						+ (1 - C) * f * sinalpha
+								* (sigma
+										+ C * sinsigma
+												* (cos2sigmam
+														+ C * cossigma
+																* (-1
+																		+ 2
+																				* cos2sigmam2)));
 
 		// see how much improvement we got
 		double change = fabs((lambda - lambda0) / lambda);
@@ -300,15 +333,15 @@ shared_ptr<GeodeticCurve> GeodeticCalculator::calculateGeodeticCurve(
 		double radians;
 
 		// eq. 20
-		radians = atan2(cosU2 * sin(lambda), (cosU1sinU2 - sinU1cosU2 * cos(
-				lambda)));
+		radians = atan2(cosU2 * sin(lambda),
+				(cosU1sinU2 - sinU1cosU2 * cos(lambda)));
 		if (radians < 0.0)
 			radians += TwoPi;
 		alpha1 = Angle::toDegrees(radians);
 
 		// eq. 21
-		radians = atan2(cosU1 * sin(lambda), (-sinU1cosU2 + cosU1sinU2 * cos(
-				lambda))) + M_PI;
+		radians = atan2(cosU1 * sin(lambda),
+				(-sinU1cosU2 + cosU1sinU2 * cos(lambda))) + M_PI;
 		if (radians < 0.0)
 			radians += TwoPi;
 		alpha2 = Angle::toDegrees(radians);
@@ -319,10 +352,10 @@ shared_ptr<GeodeticCurve> GeodeticCalculator::calculateGeodeticCurve(
 	if (alpha2 >= 360.0)
 		alpha2 -= 360.0;
 
-	return shared_ptr<GeodeticCurve> (new GeodeticCurve(s, alpha1, alpha2));
+	return GeodeticCurve::Ptr(new GeodeticCurve(s, alpha1, alpha2));
 }
-shared_ptr<GeodeticMeasurement> GeodeticCalculator::calculateGeodeticMeasurement(
-		shared_ptr<const Ellipsoid> refEllipsoid, const GlobalPosition &start,
+GeodeticMeasurement::Ptr GeodeticCalculator::calculateGeodeticMeasurement(
+		Ellipsoid::ConstPtr refEllipsoid, const GlobalPosition &start,
 		const GlobalPosition &end) {
 	// calculate elevation differences
 	double elev1 = start.getElevation();
@@ -338,15 +371,15 @@ shared_ptr<GeodeticMeasurement> GeodeticCalculator::calculateGeodeticMeasurement
 	double refA = refEllipsoid->getSemiMajorAxis();
 	double f = refEllipsoid->getFlattening();
 	double a = refA + elev12 * (1.0 + f * sin(phi12));
-	shared_ptr<const Ellipsoid> ellipsoid = Ellipsoid::fromAAndF(a, f);
+	Ellipsoid::ConstPtr ellipsoid = Ellipsoid::fromAAndF(a, f);
 
 	// calculate the curve at the average elevation
-	shared_ptr<GeodeticCurve> averageCurve = calculateGeodeticCurve(ellipsoid,
-			start, end);
+	GeodeticCurve::Ptr averageCurve = calculateGeodeticCurve(ellipsoid, start,
+			end);
 
 	// return the measurement
-	return shared_ptr<GeodeticMeasurement> (new GeodeticMeasurement(
-			*averageCurve, elev2 - elev1));
+	return GeodeticMeasurement::Ptr(
+			new GeodeticMeasurement(*averageCurve, elev2 - elev1));
 }
 
 } // geodesy

@@ -39,7 +39,7 @@ GlobalCoordinates::~GlobalCoordinates() {
 }
 
 void GlobalCoordinates::canonicalize() {
-	mLatitude = fmod((mLatitude + 180),  360);
+	mLatitude = fmod((mLatitude + 180), 360);
 	if (mLatitude < 0) {
 		mLatitude += 360;
 	}
@@ -61,7 +61,7 @@ void GlobalCoordinates::canonicalize() {
 }
 
 GlobalCoordinates::GlobalCoordinates(double latitude, double longitude) :
-	mLatitude(latitude), mLongitude(longitude) {
+		mLatitude(latitude), mLongitude(longitude) {
 	canonicalize();
 }
 
@@ -127,12 +127,12 @@ bool GlobalCoordinates::operator>=(const GlobalCoordinates &other) const {
 
 ostream& operator<<(ostream& os, const GlobalCoordinates& obj) {
 	os << fabs(obj.getLatitude()) << ((obj.getLatitude() >= 0) ? 'N' : 'S') //
-			<< ";" //
+			<<";" //
 			<< fabs(obj.getLongitude()) << ((obj.getLongitude() >= 0) ? 'E'
-			: 'W') //
+					: 'W') //
 			<< ";";
 
-	return os;
-}
+			return os;
+		}
 
-}
+		}

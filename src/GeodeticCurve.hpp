@@ -30,6 +30,7 @@
 #define GEODETICCURVE_HPP_
 
 #include <ostream>
+#include <tr1/memory>
 
 namespace geodesy {
 
@@ -42,6 +43,9 @@ namespace geodesy {
  */
 class GeodeticCurve {
 public:
+	typedef std::tr1::shared_ptr<GeodeticCurve> Ptr;
+	typedef std::tr1::shared_ptr<GeodeticCurve const> ConstPtr;
+
 	virtual ~GeodeticCurve();
 
 	/**

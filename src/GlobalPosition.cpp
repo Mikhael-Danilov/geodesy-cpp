@@ -35,12 +35,13 @@ GlobalPosition::~GlobalPosition() {
 
 GlobalPosition::GlobalPosition(double latitude, double longitude,
 		double elevation) :
-	GlobalCoordinates(latitude, longitude), mElevation(elevation) {
+		GlobalCoordinates(latitude, longitude), mElevation(elevation) {
 }
 
-GlobalPosition::GlobalPosition(const GlobalCoordinates &coords, double elevation) :
-	GlobalCoordinates(coords.getLatitude(), coords.getLongitude()), mElevation(
-			elevation) {
+GlobalPosition::GlobalPosition(const GlobalCoordinates &coords,
+		double elevation) :
+		GlobalCoordinates(coords.getLatitude(), coords.getLongitude()), mElevation(
+				elevation) {
 }
 
 double GlobalPosition::getElevation() const {
@@ -90,7 +91,7 @@ bool GlobalPosition::operator>=(const GlobalPosition &other) const {
 }
 
 std::ostream& operator<<(std::ostream& os, const GlobalPosition& obj) {
-	os << static_cast<const GlobalCoordinates &> (obj) //
+	os << static_cast<const GlobalCoordinates &>(obj) //
 			<< "elevation=" << obj.getElevation() << "m";
 
 	return os;

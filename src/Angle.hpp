@@ -29,6 +29,8 @@
 #ifndef ANGLE_HPP_
 #define ANGLE_HPP_
 
+#include <tr1/memory>
+
 namespace geodesy {
 
 /**
@@ -37,6 +39,9 @@ namespace geodesy {
  */
 class Angle {
 public:
+	typedef std::tr1::shared_ptr<Angle> Ptr;
+	typedef std::tr1::shared_ptr<Angle const> ConstPtr;
+
 	virtual ~Angle();
 
 	/**

@@ -73,6 +73,9 @@ public:
  */
 class GeodeticCalculator {
 public:
+	typedef std::tr1::shared_ptr<GeodeticCalculator> Ptr;
+	typedef std::tr1::shared_ptr<GeodeticCalculator const> ConstPtr;
+
 	virtual ~GeodeticCalculator();
 
 	/**
@@ -87,10 +90,10 @@ public:
 	 * @param endBearing bearing at destination (degrees) (output value)
 	 * @return the ending location
 	 */
-	static std::tr1::shared_ptr<GlobalCoordinates>
-			calculateEndingGlobalCoordinates(std::tr1::shared_ptr<
-					const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
-					double startBearing, double distance, double &endBearing) throw(InvalidAzimuthException);
+	static GlobalCoordinates::Ptr
+	calculateEndingGlobalCoordinates(Ellipsoid::ConstPtr ellipsoid,
+			const GlobalCoordinates &start, double startBearing,
+			double distance, double &endBearing) throw (InvalidAzimuthException);
 
 	/**
 	 * Calculate the destination after traveling a specified distance, and a
@@ -103,10 +106,10 @@ public:
 	 * @param distance distance to travel (meters)
 	 * @return the ending location
 	 */
-	static std::tr1::shared_ptr<GlobalCoordinates>
-			calculateEndingGlobalCoordinates(std::tr1::shared_ptr<
-					const Ellipsoid> ellipsoid, const GlobalCoordinates &start,
-					double startBearing, double distance) throw(InvalidAzimuthException);
+	static GlobalCoordinates::Ptr
+	calculateEndingGlobalCoordinates(Ellipsoid::ConstPtr ellipsoid,
+			const GlobalCoordinates &start, double startBearing,
+			double distance) throw (InvalidAzimuthException);
 
 	/**
 	 * Calculate the geodetic curve between two points on a specified reference
@@ -117,9 +120,9 @@ public:
 	 * @param end ending coordinates
 	 * @return the curve
 	 */
-	static std::tr1::shared_ptr<GeodeticCurve> calculateGeodeticCurve(
-			std::tr1::shared_ptr<const Ellipsoid> ellipsoid,
-			const GlobalCoordinates &start, const GlobalCoordinates &end);
+	static GeodeticCurve::Ptr calculateGeodeticCurve(
+			Ellipsoid::ConstPtr ellipsoid, const GlobalCoordinates &start,
+			const GlobalCoordinates &end);
 
 	/**
 	 * <p>
@@ -141,10 +144,9 @@ public:
 	 * @param end ending position
 	 * @return the measurement
 	 */
-	static std::tr1::shared_ptr<GeodeticMeasurement>
-			calculateGeodeticMeasurement(
-					std::tr1::shared_ptr<const Ellipsoid> refEllipsoid,
-					const GlobalPosition &start, const GlobalPosition &end);
+	static GeodeticMeasurement::Ptr
+	calculateGeodeticMeasurement(Ellipsoid::ConstPtr refEllipsoid,
+			const GlobalPosition &start, const GlobalPosition &end);
 
 private:
 	// no instances

@@ -37,8 +37,8 @@ GeodeticCurve::~GeodeticCurve() {
 
 GeodeticCurve::GeodeticCurve(double ellipsoidalDistance, double azimuth,
 		double reverseAzimuth) :
-	mEllipsoidalDistance(ellipsoidalDistance), mAzimuth(azimuth),
-			mReverseAzimuth(reverseAzimuth) {
+		mEllipsoidalDistance(ellipsoidalDistance), mAzimuth(azimuth), mReverseAzimuth(
+				reverseAzimuth) {
 }
 
 double GeodeticCurve::getEllipsoidalDistance() const {

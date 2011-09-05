@@ -38,32 +38,35 @@ namespace geodesy {
  */
 class Ellipsoid {
 public:
+	typedef std::tr1::shared_ptr<Ellipsoid> Ptr;
+	typedef std::tr1::shared_ptr<Ellipsoid const> ConstPtr;
+
 	virtual ~Ellipsoid();
 
 public:
 	/** The WGS84 ellipsoid. */
-	static std::tr1::shared_ptr<const Ellipsoid> WGS84();
+	static Ellipsoid::ConstPtr WGS84();
 
 	/** The GRS80 ellipsoid. */
-	static std::tr1::shared_ptr<const Ellipsoid> GRS80();
+	static Ellipsoid::ConstPtr GRS80();
 
 	/** The GRS67 ellipsoid. */
-	static std::tr1::shared_ptr<const Ellipsoid> GRS67();
+	static Ellipsoid::ConstPtr GRS67();
 
 	/** The ANS ellipsoid. */
-	static std::tr1::shared_ptr<const Ellipsoid> ANS();
+	static Ellipsoid::ConstPtr ANS();
 
 	/** The WGS72 ellipsoid. */
-	static std::tr1::shared_ptr<const Ellipsoid> WGS72();
+	static Ellipsoid::ConstPtr WGS72();
 
 	/** The Clarke1858 ellipsoid. */
-	static std::tr1::shared_ptr<const Ellipsoid> Clarke1858();
+	static Ellipsoid::ConstPtr Clarke1858();
 
 	/** The Clarke1880 ellipsoid. */
-	static std::tr1::shared_ptr<const Ellipsoid> Clarke1880();
+	static Ellipsoid::ConstPtr Clarke1880();
 
 	/** A spherical "ellipsoid". */
-	static std::tr1::shared_ptr<const Ellipsoid> Sphere();
+	static Ellipsoid::ConstPtr Sphere();
 
 	/**
 	 * Build an Ellipsoid from the semi major axis measurement and the inverse flattening.
@@ -71,8 +74,8 @@ public:
 	 * @param inverseFlattening
 	 * @return
 	 */
-	static std::tr1::shared_ptr<const Ellipsoid> fromAAndInverseF(
-			double semiMajor, double inverseFlattening);
+	static Ellipsoid::ConstPtr fromAAndInverseF(double semiMajor,
+			double inverseFlattening);
 
 	/**
 	 * Build an Ellipsoid from the semi major axis measurement and the flattening.
@@ -80,8 +83,7 @@ public:
 	 * @param flattening
 	 * @return
 	 */
-	static std::tr1::shared_ptr<const Ellipsoid> fromAAndF(double semiMajor,
-			double flattening);
+	static Ellipsoid::ConstPtr fromAAndF(double semiMajor, double flattening);
 
 	/**
 	 * Get semi-major axis.

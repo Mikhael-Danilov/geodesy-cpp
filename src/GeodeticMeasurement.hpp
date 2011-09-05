@@ -29,6 +29,8 @@
 #ifndef GEODETICMEASUREMENT_HPP_
 #define GEODETICMEASUREMENT_HPP_
 
+#include <tr1/memory>
+
 #include "GeodeticCurve.hpp"
 
 namespace geodesy {
@@ -38,6 +40,9 @@ namespace geodesy {
  */
 class GeodeticMeasurement: public GeodeticCurve {
 public:
+	typedef std::tr1::shared_ptr<GeodeticMeasurement> Ptr;
+	typedef std::tr1::shared_ptr<GeodeticMeasurement const> ConstPtr;
+
 	virtual ~GeodeticMeasurement();
 	/**
 	 * Creates a new instance of GeodeticMeasurement.

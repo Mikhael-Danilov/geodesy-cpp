@@ -21,4 +21,6 @@ make || fatal "Build failed"
 
 ./test/geoUnitTests
 
+make doxygen || fatal "Error building documentation"
+
 exit 0

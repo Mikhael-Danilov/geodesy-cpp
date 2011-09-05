@@ -14,9 +14,11 @@ arch=`uname -m`
 os=`uname -s`
 build_dir=build.${os}.${arch}
 
+cd "${mydir}/.."
+ln -s "${build_dir}" build
 ./setup.sh || fatal "Setup failed"
-cd "${build_dir}"
 
+cd "${build_dir}"
 make || fatal "Build failed"
 
 ./test/geoUnitTests

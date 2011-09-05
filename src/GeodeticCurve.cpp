@@ -53,6 +53,9 @@ double GeodeticCurve::getReverseAzimuth() const {
 	return mReverseAzimuth;
 }
 
+/**
+ * Output a GeodeticCurve in a human readable format.
+ */
 ostream& operator<<(ostream& os, const GeodeticCurve& obj) {
 	os << "s=" << obj.getEllipsoidalDistance() //
 			<< ";a12=" << obj.getAzimuth() //

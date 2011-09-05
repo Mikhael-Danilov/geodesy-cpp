@@ -92,11 +92,29 @@ public:
 	 */
 	int compareTo(const GlobalPosition &other) const;
 
+	/**
+	 * @see compareTo()
+	 */
 	bool operator==(const GlobalPosition &other) const;
+	/**
+	 * @see compareTo()
+	 */
 	bool operator!=(const GlobalPosition &other) const;
+	/**
+	 * @see compareTo()
+	 */
 	bool operator<(const GlobalPosition &other) const;
+	/**
+	 * @see compareTo()
+	 */
 	bool operator<=(const GlobalPosition &other) const;
+	/**
+	 * @see compareTo()
+	 */
 	bool operator>(const GlobalPosition &other) const;
+	/**
+	 * @see compareTo()
+	 */
 	bool operator>=(const GlobalPosition &other) const;
 
 private:

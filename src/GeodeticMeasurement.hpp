@@ -33,6 +33,9 @@
 
 namespace geodesy {
 
+/**
+ * A geodetic measurement.
+ */
 class GeodeticMeasurement: public GeodeticCurve {
 public:
 	virtual ~GeodeticMeasurement();
@@ -86,6 +89,9 @@ private:
 
 };
 
+/**
+ * Output in a human readable format.
+ */
 std::ostream& operator<<(std::ostream& os, const GeodeticMeasurement& obj);
 
 }

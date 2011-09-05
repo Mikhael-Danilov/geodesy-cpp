@@ -100,11 +100,29 @@ public:
 	 */
 	int compareTo(const GlobalCoordinates &other) const;
 
+	/**
+	 * @see compareTo()
+	 */
 	bool operator==(const GlobalCoordinates &other) const;
+	/**
+	 * @see compareTo()
+	 */
 	bool operator!=(const GlobalCoordinates &other) const;
+	/**
+	 * @see compareTo()
+	 */
 	bool operator<(const GlobalCoordinates &other) const;
+	/**
+	 * @see compareTo()
+	 */
 	bool operator<=(const GlobalCoordinates &other) const;
+	/**
+	 * @see compareTo()
+	 */
 	bool operator>(const GlobalCoordinates &other) const;
+	/**
+	 * @see compareTo()
+	 */
 	bool operator>=(const GlobalCoordinates &other) const;
 
 private:

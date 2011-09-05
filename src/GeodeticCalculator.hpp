@@ -54,6 +54,9 @@ public:
 	}
 	virtual ~InvalidAzimuthException() throw () {
 	}
+	/**
+	 * @see exception::what()
+	 */
 	virtual const char * what() const throw () {
 		return "Invalid Azimuth";
 	}

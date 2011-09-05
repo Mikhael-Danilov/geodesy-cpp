@@ -83,6 +83,9 @@ private:
 
 };
 
+/**
+ * Output a GeodeticCurve in a human readable format.
+ */
 std::ostream& operator<<(std::ostream& os, const GeodeticCurve& ia);
 
 } //geodesys

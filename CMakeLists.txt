@@ -14,11 +14,7 @@ add_subdirectory(test)
 # need to do doxygen
 include(FindDoxygen)
 if(DOXYGEN)
-    add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/api"
-                       COMMAND ${DOXYGEN} ARGS ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
-                       DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
-    add_custom_target(doxygen
-                      DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/api")
+    add_custom_target(doxygen ${DOXYGEN} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
 else(DOXYGEN)
     message(STATUS "WARNING: Doxygen not found - API documentation will not be created")
 endif(DOXYGEN)

@@ -1,19 +1,24 @@
-#!/usr/bin/env bash
+#!/bin/sh
+
+debug() { ! "${log_debug-false}" || log "DEBUG: $*" >&2; }
+log() { printf '%s\n' "$*"; }
+warn() { log "WARNING: $*" >&2; }
+error() { log "ERROR: $*" >&2; }
+fatal() { error "$*"; exit 1; }
 
 arch=`uname -m`
 os=`uname -s`
 build_dir=build.${os}.${arch}
 mkdir -p ${build_dir}
 
-#echo "Specify install prefix (default is /usr/local)"
+#log "Specify install prefix (default is /usr/local)"
 #read prefix
-#echo "prefix is #${prefix}#"
+#log "prefix is #${prefix}#"
 #if [ -n "${prefix}" ]; then
 #  cmake_cmd="cmake -DCMAKE_INSTALL_PREFIX=${prefix}"
 #else
   cmake_cmd="cmake"
 #fi
-#echo "cmake command is #${cmake_cmd}#"
+#log "cmake command is #${cmake_cmd}#"
 cd ${build_dir} && ${cmake_cmd} ..
-echo "Created build directory ${build_dir}"
-
+log "Created build directory ${build_dir}"

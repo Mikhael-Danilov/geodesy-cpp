@@ -25,4 +25,6 @@ make || fatal "Build failed"
 
 make doxygen || fatal "Error building documentation"
 
+make sloccount || fatal "Error generating sloccount information"
+
 exit 0

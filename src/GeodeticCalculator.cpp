@@ -30,6 +30,7 @@
 #include "Angle.hpp"
 
 #include <cmath>
+#include <limits>
 
 namespace geodesy {
 
@@ -321,8 +322,8 @@ GeodeticCurve::Ptr GeodeticCalculator::calculateGeodeticCurve(
 			alpha1 = 0.0;
 			alpha2 = 180.0;
 		} else {
-			alpha1 = nan("");
-			alpha2 = nan("");
+                        alpha1 = std::numeric_limits<double>::quiet_NaN();
+			alpha2 = std::numeric_limits<double>::quiet_NaN();
 		}
 	}
 

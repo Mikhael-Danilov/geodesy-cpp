@@ -183,7 +183,6 @@ void GeodeticCalculatorTest::testZeroDistance() {
 void GeodeticCalculatorTest::testNanAzimuth() {
 	GlobalCoordinates lincolnMemorial(38.88922, -77.04978);
 	double startBearing = nan("foo");
-	double distance = 6179016.13586;
 	bool exception = false;
 
 	try {

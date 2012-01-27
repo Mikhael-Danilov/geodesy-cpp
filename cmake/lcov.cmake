@@ -14,9 +14,7 @@
 find_program(LCOV_TOOL "lcov")
 find_program(LCOV_HTML "genhtml")
 
-if(LCOV_TOOL AND LCOV_HTML AND CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
-
+if(LCOV_TOOL AND LCOV_HTML)
     if(NOT DEFINED "LCOV_OUTPUT_DIR")
         set(LCOV_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/doc)
     endif()
@@ -25,13 +23,13 @@ if(LCOV_TOOL AND LCOV_HTML AND CMAKE_COMPILER_IS_GNUCXX)
         set(LCOV_SCAN_DIR ${CMAKE_CURRENT_BINARY_DIR}/src)
     endif()
 
-	add_custom_target(lcov)
+    add_custom_target(lcov)
     add_dependencies(lcov check)
 
     add_custom_command(TARGET lcov POST_BUILD
         COMMAND ${LCOV_TOOL} --capture --directory ${LCOV_SCAN_DIR} --output-file ${CMAKE_CURRENT_BINARY_DIR}/coverage.lcov
-		COMMAND ${LCOV_TOOL} --remove ${CMAKE_CURRENT_BINARY_DIR}/coverage.lcov '*.h' --output-file ${CMAKE_CURRENT_BINARY_DIR}/coverage.lcov
-		COMMAND ${LCOV_TOOL} --remove ${CMAKE_CURRENT_BINARY_DIR}/coverage.lcov '/usr/include/*' --output-file ${CMAKE_CURRENT_BINARY_DIR}/coverage.lcov
-        COMMAND ${LCOV_HTML} ${CMAKE_CURRENT_BINARY_DIR}/coverage.lcov --no-branch-coverage --output-directory ${LCOV_OUTPUT_DIR}/lcov
+	#COMMAND ${LCOV_TOOL} --remove ${CMAKE_CURRENT_BINARY_DIR}/coverage.lcov '*.h' --output-file ${CMAKE_CURRENT_BINARY_DIR}/coverage.lcov
+	#COMMAND ${LCOV_TOOL} --remove ${CMAKE_CURRENT_BINARY_DIR}/coverage.lcov '/usr/include/*' --output-file ${CMAKE_CURRENT_BINARY_DIR}/coverage.lcov
+	COMMAND ${LCOV_HTML} ${CMAKE_CURRENT_BINARY_DIR}/coverage.lcov --no-branch-coverage --output-directory ${LCOV_OUTPUT_DIR}/lcov
     )
 endif()

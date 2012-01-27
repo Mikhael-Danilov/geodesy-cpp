@@ -3,8 +3,8 @@ cmake_minimum_required (VERSION 2.6)
 
 include_directories(${GEODESY_SOURCE_DIR}/src )
 
-# turn on debugging
-add_definitions(-g)
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Werror")
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Werror")
 
 add_subdirectory(src)
 

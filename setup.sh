@@ -20,5 +20,5 @@ mkdir -p ${build_dir}
   cmake_cmd="cmake"
 #fi
 #log "cmake command is #${cmake_cmd}#"
-cd ${build_dir} && ${cmake_cmd} ..
+cd ${build_dir} && ${cmake_cmd} -DCMAKE_BUILD_TYPE=debug ..
 log "Created build directory ${build_dir}"

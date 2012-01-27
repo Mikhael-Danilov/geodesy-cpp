@@ -14,11 +14,11 @@ add_executable(geoUnitTests ${SOURCES})
 
 target_link_libraries(geoUnitTests geodesy cppunit m)
 
-add_custom_target(run_tests
+add_custom_target(check
                   COMMAND ${CMAKE_CURRENT_BINARY_DIR}/geoUnitTests
                   DEPENDS geoUnitTests
                   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
 # This dependency ensures source is recompiled when the run_tests target is
 # called directly after source code modification.
-add_dependencies(run_tests geoUnitTests)
+add_dependencies(check geoUnitTests)

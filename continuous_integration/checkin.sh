@@ -21,7 +21,7 @@ ln -s "${build_dir}" build
 cd "${build_dir}"
 make || fatal "Build failed"
 
-./test/geoUnitTests
+make check
 
 make doxygen || fatal "Error building documentation"
 

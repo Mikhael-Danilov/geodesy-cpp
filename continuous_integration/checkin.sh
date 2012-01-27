@@ -21,7 +21,9 @@ ln -s "${build_dir}" build
 cd "${build_dir}"
 make || fatal "Build failed"
 
-make lcov || fatal "Error running tests"
+make check || fatal "Error running tests"
+
+${mydir}/gcovr -r . -e '.*/test/' -x -o coverage.xml
 
 make doxygen || fatal "Error building documentation"
 

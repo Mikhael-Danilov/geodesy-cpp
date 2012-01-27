@@ -29,4 +29,6 @@ make doxygen || fatal "Error building documentation"
 
 make sloccount || fatal "Error generating sloccount information"
 
+${mydir}/copy-paste-detector || fatal "Error running copy paste detect"
+
 exit 0

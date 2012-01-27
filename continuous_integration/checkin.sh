@@ -12,16 +12,16 @@ cd "${mydir}/.."
 
 arch=`uname -m`
 os=`uname -s`
-build_dir=build.${os}.${arch}
+build_dir=build.${os}.${arch}-debug
 
 cd "${mydir}/.."
 ln -s "${build_dir}" build
-./setup.sh || fatal "Setup failed"
+./setup.sh debug || fatal "Setup failed"
 
 cd "${build_dir}"
 make || fatal "Build failed"
 
-make check
+make lcov || fatal "Error running tests"
 
 make doxygen || fatal "Error building documentation"
 

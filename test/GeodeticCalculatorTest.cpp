@@ -189,7 +189,7 @@ void GeodeticCalculatorTest::testNanAzimuth() {
 		shared_ptr<GlobalCoordinates> dest =
 				GeodeticCalculator::calculateEndingGlobalCoordinates(
 						Ellipsoid::WGS84(), lincolnMemorial, startBearing, 0);
-	} catch (InvalidAzimuthException e) {
+	} catch (InvalidAzimuthException &e) {
 		exception = true;
 	}
 	CPPUNIT_ASSERT_EQUAL_MESSAGE("Should have gotten an exception", true, exception);

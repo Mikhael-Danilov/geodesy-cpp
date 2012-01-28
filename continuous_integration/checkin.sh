@@ -10,13 +10,12 @@ mydir=$(cd "$(dirname "$0")" && pwd -L) || fatal "Cannot determine directory of 
 
 cd "${mydir}/.."
 
-arch=`uname -m`
-os=`uname -s`
-build_dir=build.${os}.${arch}-debug
-
 cd "${mydir}/.."
+./setup.sh coverage > setup.log 2>&1 || fatal "Setup failed"
+
+# figure out what the build directory is called
+build_dir=$(cat setup.log | grep 'Created build directory' | awk '{print $4}')
 ln -s "${build_dir}" build
-./setup.sh debug || fatal "Setup failed"
 
 cd "${build_dir}"
 make || fatal "Build failed"

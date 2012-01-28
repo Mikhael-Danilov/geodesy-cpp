@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 
 debug() { ! "${log_debug-false}" || log "DEBUG: $*" >&2; }
 log() { printf '%s\n' "$*"; }

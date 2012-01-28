@@ -13,7 +13,7 @@ if(CPPCHECK)
   if(NOT DEFINED "CPPCHECK_OUTPUT")
     set(CPPCHECK_OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/cppcheck.xml)
   endif()
-  set(CPPCHECK_FLAGS --enable=style --enable=information --enable=missingInclude)
+  set(CPPCHECK_FLAGS --enable=all)
   
   add_custom_target(cppcheck.xml)
   add_custom_command(TARGET cppcheck.xml POST_BUILD

@@ -11,7 +11,7 @@ mydir=$(cd "$(dirname "$0")" && pwd -L) || fatal "Cannot determine directory of 
 cd "${mydir}/.."
 
 cd "${mydir}/.."
-./setup.sh coverage > setup.log 2>&1 || fatal "Setup failed"
+./setup.sh coverage 2>&1 | tee setup.log || fatal "Setup failed"
 
 # figure out what the build directory is called
 build_dir=$(cat setup.log | grep 'Created build directory' | awk '{print $4}')

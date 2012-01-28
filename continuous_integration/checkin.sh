@@ -32,6 +32,6 @@ make sloccount || fatal "Error generating sloccount information"
 ${mydir}/copy-paste-detector || fatal "Error running copy paste detect"
 
 # do static analysis
-make cppcheck || fatal "Error doing static analysis"
+make cppcheck.xml || fatal "Error doing static analysis"
 
 exit 0

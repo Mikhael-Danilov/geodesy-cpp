@@ -50,3 +50,14 @@ if(SLOCCOUNT)
 else(SLOCCOUNT)
   message(STATUS "WARNING: sloccount not found - will not generate SLOC count report")
 endif(SLOCCOUNT)
+
+find_program(CPPCHECK cppcheck)
+if(CPPCHECK)
+  # cppcheck command
+  add_custom_command(OUTPUT "cppcheck.xml"
+    COMMAND ${CPPCHECK} --enable=all --xml ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/test 2> cppcheck.xml)
+
+  # make sure cppcheck is run
+  add_custom_target(cppcheck DEPENDS "cppcheck.xml")
+  add_dependencies(cppcheck src test)
+endif(CPPCHECK)

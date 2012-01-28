@@ -25,11 +25,13 @@ make lcov || fatal "Error running tests"
 # convert lcov output to cobertura output
 ${mydir}/lcov-to-cobertura-xml.py -b "${mydir}/.." -e ".*usr.include.*" -o "${mydir}/coverage.xml" coverage.lcov
 
-
 make doxygen || fatal "Error building documentation"
 
 make sloccount || fatal "Error generating sloccount information"
 
 ${mydir}/copy-paste-detector || fatal "Error running copy paste detect"
+
+# do static analysis
+make cppcheck || fatal "Error doing static analysis"
 
 exit 0

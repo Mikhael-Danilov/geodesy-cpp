@@ -21,13 +21,10 @@ ln -s "${build_dir}" build
 cd "${build_dir}"
 make || fatal "Build failed"
 
-#make check || fatal "Error running tests"
-
 make lcov || fatal "Error running tests"
 
 # convert lcov output to cobertura output
 ${mydir}/lcov-to-cobertura-xml.py -b "${mydir}/.." -e ".*usr.include.*" -o "${mydir}/coverage.xml" coverage.lcov
-#${mydir}/gcovr -r . -e '.*/test/' -x -o coverage.xml
 
 
 make doxygen || fatal "Error building documentation"

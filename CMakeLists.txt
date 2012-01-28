@@ -1,10 +1,29 @@
 project (GEODESY) 
 cmake_minimum_required (VERSION 2.6)
 
-include_directories(${GEODESY_SOURCE_DIR}/src )
+# order matters, need to set these before adding the subdirectories below
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Werror")
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Werror")
+# turn on some more warnings
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Werror -Wall -Wextra")
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Werror -Wall -Wextra")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Werror -Wall -Wextra")
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Werror -Wall -Wextra")
+
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror -Wall -Wextra")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wall -Wextra")
+
+# support building for coverage analysis
+SET(CMAKE_C_FLAGS_COVERAGE "${CMAKE_C_FLAGS_DEBUG} -O0 --coverage")
+SET(CMAKE_CXX_FLAGS_COVERAGE "${CMAKE_CXX_FLAGS_DEBUG} -O0 --coverage")
+SET(CMAKE_EXE_LINKER_FLAGS_COVERAGE "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --coverage")
+
+# add lcov target
+include(${CMAKE_SOURCE_DIR}/cmake/lcov.cmake)
+
+
+# this needs to be after the coverage setup above
+include_directories(${GEODESY_SOURCE_DIR}/src )
 
 add_subdirectory(src)
 
@@ -14,9 +33,9 @@ add_subdirectory(test)
 # need to do doxygen
 include(FindDoxygen)
 if(DOXYGEN)
-    add_custom_target(doxygen ${DOXYGEN} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
+  add_custom_target(doxygen ${DOXYGEN} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
 else(DOXYGEN)
-    message(STATUS "WARNING: Doxygen not found - API documentation will not be created")
+  message(STATUS "WARNING: Doxygen not found - API documentation will not be created")
 endif(DOXYGEN)
 
 find_program(SLOCCOUNT sloccount)
@@ -31,3 +50,7 @@ if(SLOCCOUNT)
 else(SLOCCOUNT)
   message(STATUS "WARNING: sloccount not found - will not generate SLOC count report")
 endif(SLOCCOUNT)
+
+include(${CMAKE_SOURCE_DIR}/cmake/cppcheck.cmake)
+add_dependencies(cppcheck.xml src test)
+add_dependencies(cppcheck src test)

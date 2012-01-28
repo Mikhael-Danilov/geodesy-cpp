@@ -41,7 +41,7 @@
 using namespace std;
 using namespace CppUnit;
 
-int main(int argc, char **argv)
+int main(int /*argc*/, char **/*argv*/)
 {
     //  TestResult controller;
     //  TestResultCollector result;

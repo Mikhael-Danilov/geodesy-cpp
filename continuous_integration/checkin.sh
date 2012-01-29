@@ -23,7 +23,7 @@ make || fatal "Build failed"
 make lcov || fatal "Error running tests"
 
 # convert lcov output to cobertura output
-${mydir}/lcov-to-cobertura-xml.py -b "${mydir}/.." -e ".*usr.include.*" -o "${mydir}/coverage.xml" coverage.lcov
+${mydir}/lcov-to-cobertura-xml/lcov-to-cobertura-xml.py -b "${mydir}/.." -e ".*usr.include.*" -o "${mydir}/coverage.xml" coverage.lcov
 
 make doxygen || fatal "Error building documentation"
 

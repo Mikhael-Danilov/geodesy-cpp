@@ -159,9 +159,10 @@ void GeodeticCalculatorTest::testPoleCrossing() {
 	GlobalCoordinates expected(85.60006433, 92.17243943);
 
 	// calculate the ending global coordinates
+	double endBearing;
 	shared_ptr<GlobalCoordinates> dest =
 			GeodeticCalculator::calculateEndingGlobalCoordinates(reference,
-					lincolnMemorial, startBearing, distance);
+					lincolnMemorial, startBearing, distance, endBearing);
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected.getLatitude(), dest->getLatitude(), 0.0000001);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected.getLongitude(), dest->getLongitude(), 0.0000001);
@@ -172,11 +173,12 @@ void GeodeticCalculatorTest::testZeroDistance() {
 	double startBearing = 1.0;
 	double distance = 0;
 
+	double endBearing;
 	shared_ptr<GlobalCoordinates>
 			dest =
 					GeodeticCalculator::calculateEndingGlobalCoordinates(
 							Ellipsoid::WGS84(), lincolnMemorial, startBearing,
-							distance);
+							distance, endBearing);
 	CPPUNIT_ASSERT_EQUAL(lincolnMemorial, *dest);
 }
 
@@ -186,9 +188,10 @@ void GeodeticCalculatorTest::testNanAzimuth() {
 	bool exception = false;
 
 	try {
+		double endBearing;
 		shared_ptr<GlobalCoordinates> dest =
 				GeodeticCalculator::calculateEndingGlobalCoordinates(
-						Ellipsoid::WGS84(), lincolnMemorial, startBearing, 0);
+						Ellipsoid::WGS84(), lincolnMemorial, startBearing, 0, endBearing);
 	} catch (InvalidAzimuthException &e) {
 		exception = true;
 	}

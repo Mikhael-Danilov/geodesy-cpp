@@ -38,7 +38,8 @@ using namespace std;
 
 GlobalCoordinates::Ptr GeodeticCalculator::calculateEndingGlobalCoordinates(
 		Ellipsoid::ConstPtr ellipsoid, const GlobalCoordinates &start,
-		double startBearing, double distance, double &endBearing)
+		double startBearing, double distance, double &endBearing,
+		double const errorTolerance, int const maxIterations)
 				throw (InvalidAzimuthException) {
 	if (isnan(startBearing)) {
 		throw InvalidAzimuthException();
@@ -94,7 +95,7 @@ GlobalCoordinates::Ptr GeodeticCalculator::calculateEndingGlobalCoordinates(
 	double cosSigmaM2;
 	double cos2SigmaM2;
 
-	for (;;) {
+	for (int iteration = 0; iteration < maxIterations; ++iteration) {
 		// eq. 5
 		sigmaM2 = 2.0 * sigma1 + sigma;
 		cosSigmaM2 = cos(sigmaM2);
@@ -115,7 +116,7 @@ GlobalCoordinates::Ptr GeodeticCalculator::calculateEndingGlobalCoordinates(
 		sigma = sOverbA + deltaSigma;
 
 		// break after converging to tolerance
-		if (fabs(sigma - prevSigma) < 0.0000000000001)
+		if (fabs(sigma - prevSigma) < errorTolerance)
 			break;
 
 		prevSigma = sigma;
@@ -175,17 +176,10 @@ GlobalCoordinates::Ptr GeodeticCalculator::calculateEndingGlobalCoordinates(
 	return GlobalCoordinates::Ptr(new GlobalCoordinates(latitude, longitude));
 }
 
-GlobalCoordinates::Ptr GeodeticCalculator::calculateEndingGlobalCoordinates(
-		Ellipsoid::ConstPtr ellipsoid, const GlobalCoordinates &start,
-		double startBearing, double distance) throw (InvalidAzimuthException) {
-	double dummy;
-	return calculateEndingGlobalCoordinates(ellipsoid, start, startBearing,
-			distance, dummy);
-}
-
 GeodeticCurve::Ptr GeodeticCalculator::calculateGeodeticCurve(
 		Ellipsoid::ConstPtr ellipsoid, const GlobalCoordinates &start,
-		const GlobalCoordinates &end) {
+		const GlobalCoordinates &end, double const errorTolerance,
+		int const maxIterations) {
 	//
 	// All equation numbers refer back to Vincenty's publication:
 	// See http://www.ngs.noaa.gov/PUBS_LIB/inverse.pdf
@@ -237,7 +231,7 @@ GeodeticCurve::Ptr GeodeticCalculator::calculateGeodeticCurve(
 	double lambda0;
 	bool converged = false;
 
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < maxIterations; i++) {
 		lambda0 = lambda;
 
 		double sinlambda = sin(lambda);
@@ -302,7 +296,7 @@ GeodeticCurve::Ptr GeodeticCalculator::calculateGeodeticCurve(
 		// see how much improvement we got
 		double change = fabs((lambda - lambda0) / lambda);
 
-		if ((i > 1) && (change < 0.0000000000001)) {
+		if ((i > 1) && (change < errorTolerance)) {
 			converged = true;
 			break;
 		}
@@ -322,7 +316,7 @@ GeodeticCurve::Ptr GeodeticCalculator::calculateGeodeticCurve(
 			alpha1 = 0.0;
 			alpha2 = 180.0;
 		} else {
-                        alpha1 = std::numeric_limits<double>::quiet_NaN();
+			alpha1 = std::numeric_limits<double>::quiet_NaN();
 			alpha2 = std::numeric_limits<double>::quiet_NaN();
 		}
 	}

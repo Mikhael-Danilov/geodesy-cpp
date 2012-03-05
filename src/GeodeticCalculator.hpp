@@ -88,28 +88,16 @@ public:
 	 * @param startBearing starting bearing (degrees)
 	 * @param distance distance to travel (meters)
 	 * @param endBearing bearing at destination (degrees) (output value)
+	 * @param errorTolerance once the change in lambda reaches this value, stop iterating
+	 * @param maxIterations maximum number of iterations, even if the error tolerance is not met
 	 * @return the ending location
 	 */
 	static GlobalCoordinates::Ptr
 	calculateEndingGlobalCoordinates(Ellipsoid::ConstPtr ellipsoid,
 			const GlobalCoordinates &start, double startBearing,
-			double distance, double &endBearing) throw (InvalidAzimuthException);
-
-	/**
-	 * Calculate the destination after traveling a specified distance, and a
-	 * specified starting bearing, for an initial location. This is the solution
-	 * to the direct geodetic problem.
-	 *
-	 * @param ellipsoid reference ellipsoid to use
-	 * @param start starting location
-	 * @param startBearing starting bearing (degrees)
-	 * @param distance distance to travel (meters)
-	 * @return the ending location
-	 */
-	static GlobalCoordinates::Ptr
-	calculateEndingGlobalCoordinates(Ellipsoid::ConstPtr ellipsoid,
-			const GlobalCoordinates &start, double startBearing,
-			double distance) throw (InvalidAzimuthException);
+			double distance, double &endBearing, double const errorTolerance =
+					1E-13, int const maxIterations = 20)
+					throw (InvalidAzimuthException);
 
 	/**
 	 * Calculate the geodetic curve between two points on a specified reference
@@ -118,11 +106,14 @@ public:
 	 * @param ellipsoid reference ellipsoid to use
 	 * @param start starting coordinates
 	 * @param end ending coordinates
+	 * @param errorTolerance once the change in lambda reaches this value, stop iterating
+	 * @param maxIterations maximum number of iterations, even if the error tolerance is not met
 	 * @return the curve
 	 */
 	static GeodeticCurve::Ptr calculateGeodeticCurve(
 			Ellipsoid::ConstPtr ellipsoid, const GlobalCoordinates &start,
-			const GlobalCoordinates &end);
+			const GlobalCoordinates &end, double const errorTolerance = 1E-13,
+			int const maxIterations = 20);
 
 	/**
 	 * <p>
